@@ -1,18 +1,20 @@
 // requiring all the things
 
 var express = require('express'),
-    PORT    = process.env.PORT || 3788,
-    server  = express(),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     ejs = require('ejs'),
     expressEjsLayouts = require('express-ejs-layouts'),
     methodOverride = require('method-override');
 
+// server setup
+var PORT    = process.env.PORT || 3788,
+    server  = express();
+
 // setting up mongoose stuff
 
 var MONGOURI = process.env.MONGOLAB_URI || "mongodb://localhost:27017",
-    dbname   = "change_this_later",
+    dbname   = "collaboetry",
     mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
