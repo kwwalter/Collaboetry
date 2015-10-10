@@ -1,5 +1,30 @@
+/* fonts from Google Fonts */
+
+@font-face {
+		font-family: AmaticBold;
+    src: url('fonts/Amatic_SC/AmaticSC-Bold.ttf');
+}
+
+@font-face {
+		font-family: AmaticStd;
+    src: url('fonts/Amatic_SC/AmaticSC-Regular.ttf');
+}
+
+@font-face {
+		font-family: Handwriting;
+    src: url('fonts/Waiting_for_the_Sunrise/WaitingfortheSunrise.ttf');
+}
+
+/* regular stylin' */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: fantasy;
+  background: beige;
+  height: 100%;
 }
