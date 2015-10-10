@@ -37,11 +37,27 @@ server.use(bodyParser.urlencoded({
 
 server.use(methodOverride('_method'));
 
-// specific routes--starting with a test one
+// specific GET routes--starting with a test one
 
 server.get('/wicked-secret-test', function(req, res){
   res.write("welcome to my craptastic app!");
   res.end();
+});
+
+server.get('/', function(req, res, next){
+  res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
+});
+
+server.get('/poems-by-author', function(req, res, next){
+  res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
+});
+
+server.get('/poem/:id', function(req, res, next){
+  res.render('poem', { /* TO-DO: SPECIFIC POEM OBJECT */ });
+});
+
+server.get('/poem/:id/edit', function(req, res, next){
+  res.render('edit', { /* TO-DO: SPECIFIC POEM OBJECT })
 });
 
 // server listen and mongoose connect

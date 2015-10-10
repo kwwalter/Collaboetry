@@ -2,17 +2,17 @@
 
 @font-face {
 		font-family: AmaticBold;
-    src: url('fonts/Amatic_SC/AmaticSC-Bold.ttf');
+    src: url('fonts/AmaticSC-Bold.ttf');
 }
 
 @font-face {
 		font-family: AmaticStd;
-    src: url('fonts/Amatic_SC/AmaticSC-Regular.ttf');
+    src: url('fonts/AmaticSC-Regular.ttf');
 }
 
 @font-face {
 		font-family: Handwriting;
-    src: url('fonts/Waiting_for_the_Sunrise/WaitingfortheSunrise.ttf');
+    src: url('fonts/WaitingfortheSunrise.ttf');
 }
 
 /* regular stylin' */
@@ -24,7 +24,35 @@
 }
 
 body {
-  font-family: fantasy;
-  background: beige;
+  font-family: AmaticStd, Garamond, fantasy;
+  background: LightGoldenrodYellow;
   height: 100%;
+}
+
+.site-header {
+  height: 5rem;
+  width: 80%;
+  margin: 1rem auto;
+  padding-bottom: 3rem;
+  font-family: AmaticBold, Garamond, fantasy;
+  font-weight: bold;
+  background-color: floralwhite;
+}
+
+.site-header ul {
+  border: 3px double black;
+}
+
+.site-header li {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 2.5rem;
+  list-style: none;
+  display: inline-block;
+  padding: 2rem;
+}
+
+.site-header a {
+  color: white;
+  background-color: blue;
 }
