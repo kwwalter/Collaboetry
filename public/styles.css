@@ -24,9 +24,18 @@
 }
 
 body {
-  font-family: AmaticStd, Garamond, fantasy;
+  font-family: AmaticStd, fantasy;
   background: LightGoldenrodYellow;
   height: 100%;
+}
+
+h1 {
+  font-size: 7rem;
+}
+
+p {
+  font-size: 2.5rem;
+  font-family: AmaticStd, fantasy;
 }
 
 .site-header {
@@ -34,13 +43,13 @@ body {
   width: 80%;
   margin: 1rem auto;
   padding-bottom: 3rem;
-  font-family: AmaticBold, Garamond, fantasy;
-  font-weight: bold;
-  background-color: floralwhite;
+  font-family: AmaticBold, fantasy;
+  letter-spacing: 6px;
 }
 
 .site-header ul {
   border: 3px double black;
+  background-color: floralwhite;
 }
 
 .site-header li {
@@ -52,7 +61,24 @@ body {
   padding: 2rem;
 }
 
-.site-header a {
-  color: white;
-  background-color: blue;
+.site-header a:hover {
+  color: lightcoral;
+}
+
+.home-stuff {
+  margin-left: 1.5rem; 
+}
+
+.poems-by-H1 {
+  text-align: center;
+}
+
+.poems-by-author, .poems-by-tag {
+  width: 60%;
+  margin: 0 auto;
+  border: 2px dashed lightcoral;
+}
+
+.poems-by-author *, .poems-by-tag * {
+  margin-left: 0.5rem;
 }
