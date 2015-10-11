@@ -6,7 +6,9 @@ var express           = require('express'),
     ejs               = require('ejs'),
     expressEjsLayouts = require('express-ejs-layouts'),
     methodOverride    = require('method-override'),
-    session           = require('express-session');
+    session           = require('express-session'),
+    poems             = require('./controllers/poems.js'),
+    users             = require('./controllers/users.js');
 
 // server setup
 var PORT    = process.env.PORT || 3788,
@@ -58,13 +60,11 @@ server.get('/home', function(req, res, next){
   next();
 });
 
-server.get('/vote', function(req, res, next){
-  res.render('vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
-});
-
 // server listen and mongoose connect
 
-mongoose.connect(MONGOURI + "/" + dbname);
+mongoose.connect(MONGOURI + "/" + dbname, function(){
+  console.log("DATABASE IS UP!");
+});
 server.listen(PORT, function() {
   console.log("SERVER IS UP ON PORT: ", PORT);
 });

@@ -23,23 +23,22 @@ router.post('/signup', function(req, res) {
   });
 });
 
-// this route will grab all poems by a specific author
+router.get('/login', function(req, res){
+  res.render('users/login')
+});
 
-router.get('/poems-by-author/:id', function(req, res){
-  User.find( {
-    _id: req.params.id
-  }, function(err, foundPoems) {
-    if (err) {
-      console.log("Error finding poems by author with id: ", req.params.id);
-      res.redirect('./home');
-    } else {
-      //redirect to poems by this author
-      var poetID = req.params.id;
-      res.render('./poems-by-author', {
-        poems: foundPoems,
-        poetID: poetID
-      });
-    }
+router.post('/login', function(req, res){
+  var attemptedLogin = req.body.user;
+
+  User.findOne( {
+    username: attemptedLogin
+  }, function(err, foundUser){
+      if (err) {
+        console.log("There was an error locating this user in the database");
+        res.end();
+      } else {
+        console.log(foundUser, " found!");
+      }
   });
 });
 
