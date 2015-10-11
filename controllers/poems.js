@@ -13,11 +13,11 @@ router.get('/poems-by-author/:id', function(req, res){
   }, function(err, foundPoems) {
     if (err) {
       console.log("Error finding poems by author with id: ", req.params.id);
-      res.redirect('home');
+      res.redirect('/home');
     } else {
       //redirect to poems by this author
       var poetID = req.params.id;
-      res.render('./poems-by-author', {
+      res.render('poems/poems-by-author', {
         poems: foundPoems,
         poetID: poetID
       });
@@ -26,23 +26,23 @@ router.get('/poems-by-author/:id', function(req, res){
 });
 
 router.get('/poems-by-tag', function(req, res, next){
-  res.render('poems-by-tag', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ });
+  res.render('poems/poems-by-tag', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ });
 });
 
 router.get('/poem/:id', function(req, res, next){
-  res.render('poem', { /* TO-DO: SPECIFIC POEM OBJECT */ });
+  res.render('poems/poem', { /* TO-DO: SPECIFIC POEM OBJECT */ });
 });
 
 router.get('/poem/:id/edit', function(req, res, next){
-  res.render('edit', { /* TO-DO: SPECIFIC POEM OBJECT */ })
+  res.render('poems/edit', { /* TO-DO: SPECIFIC POEM OBJECT */ })
 });
 
 router.post('/poem/:id/edit', function(req, res, next){
-  Poem.findById()
+  // Poem.findById()
 });
 
 router.get('/vote', function(req, res, next){
-  res.render('vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
+  res.render('poems/vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
 });
 
 module.exports = router;

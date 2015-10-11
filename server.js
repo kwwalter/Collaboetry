@@ -7,8 +7,8 @@ var express           = require('express'),
     expressEjsLayouts = require('express-ejs-layouts'),
     methodOverride    = require('method-override'),
     session           = require('express-session'),
-    poems             = require('./controllers/poems.js'),
-    users             = require('./controllers/users.js');
+    poemController    = require('./controllers/poems.js'),
+    userController    = require('./controllers/users.js');
 
 // server setup
 var PORT    = process.env.PORT || 3788,
@@ -48,16 +48,27 @@ server.use(bodyParser.urlencoded({
 
 server.use(methodOverride('_method'));
 
-// specific GET routes--starting with a test one
+// specific routes--starting with a test one
 
 server.get('/wicked-secret-test', function(req, res){
   res.write("welcome to my craptastic app!");
   res.end();
 });
 
+server.use('/users', userController);
+
+server.use('/poems', poemController);
+
 server.get('/home/:id', function(req, res){
   res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
 });
+
+// failsafe in case someone gets to where they're not supposed to be..
+
+server.use(function(req, res, next){
+  res.write("You've reached the end of the road, pal.");
+  res.end();
+})
 
 // server listen and mongoose connect
 
