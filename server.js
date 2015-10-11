@@ -76,12 +76,23 @@ server.get('/home/:id', function(req, res){
   res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
 });
 
+server.get('/home', function(req, res){
+  console.log("have to log in. redirecting..");
+  res.redirect(302, '/users/login'); 
+});
+
+server.get('/new-user/:id', function(req, res){
+  var currentUserID = req.params.id;
+
+  res.render('new-user', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
+});
+
 // failsafe in case someone gets to where they're not supposed to be..
 
-server.use(function(req, res, next){
-  res.write("You've reached the end of the road, pal.");
-  res.end();
-})
+// server.use(function(req, res, next){
+//   res.write("You've reached the end of the road, pal.");
+//   res.end();
+// })
 
 // server listen and mongoose connect
 

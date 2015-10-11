@@ -1,14 +1,16 @@
 <h1>Log in to Collaboetry and begin criticizing your friends immediately!</h1>
 
-<form action="/users/login" method="post">
-  <input type="text"
-         name="user[username]"
-         placeholder="Enter your username here">
-  <input type="password"
-         name="user[password]"
-         placeholder="your password here">
-  <input type="submit" value="Log in!">
-</form>
+<div class="login-signup-form">
+  <form action="/users/login" method="post">
+    <input type="text"
+           name="user[username]"
+           placeholder="Enter your username here"><br>
+    <input type="password"
+           name="user[password]"
+           placeholder="your password here"><br>
+    <input type="submit" value="Log in!">
+  </form>
+</div>
 
 <h2>First time user?</h2>
 <h3>Click <a href="/users/signup">here</a> to create an account</h3>

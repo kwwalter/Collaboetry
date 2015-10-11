@@ -8,7 +8,7 @@ var express = require('express'),
 // for a listing of all poems, grouped by author
 
 router.get('/poems-by-author', function(req, res){
-  res.render('poems-by-author', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ }
+  res.render('poems-by-author', { /* TO-DO: Poem data so we can display all poems by this particular author */ });
 });
 
 // this route will grab all poems by a specific author
@@ -19,7 +19,7 @@ router.get('/poems-by-author/:id', function(req, res){
   }, function(err, foundPoems) {
     if (err) {
       console.log("Error finding poems by author with id: ", req.params.id);
-      res.redirect('/home');
+      res.redirect('./home');
     } else {
       //redirect to poems by this author
       var poetID = req.params.id;
@@ -43,7 +43,7 @@ router.get('/poems-by-tag/:tag', function(req, res){
   }, function(err, foundPoems) {
     if (err) {
       console.log("Error finding poems with tag: ", req.params.tag);
-      res.redirect('/home');
+      res.redirect('./home');
     } else {
       //redirect to poems that have this tag
       res.render('poems/poems-by-tag', {
