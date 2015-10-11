@@ -1,8 +1,26 @@
 var express = require('express'),
     router  = express.Router(),
-    User    = require('../models/user.js');
+    Poem    = require('../models/poem.js');
 
 // routes for this router
+
+router.get('/poems-by-author', function(req, res, next){
+  res.render('poems-by-author', { /* TO-DO: Poem data so we can display all poems, grouped by author */ });
+});
+
+router.get('/poems-by-tag', function(req, res, next){
+  res.render('poems-by-tag', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ });
+});
+
+router.get('/poem/:id', function(req, res, next){
+  res.render('poem', { /* TO-DO: SPECIFIC POEM OBJECT */ });
+});
+
+router.get('/poem/:id/edit', function(req, res, next){
+  res.render('edit', { /* TO-DO: SPECIFIC POEM OBJECT */ })
+});
+
+//old
 
 router.get('/signup', function(req, res) {
   res.render('users/signup');

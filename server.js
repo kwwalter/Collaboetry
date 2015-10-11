@@ -58,24 +58,8 @@ server.get('/home', function(req, res, next){
   next();
 });
 
-server.get('/poems-by-author', function(req, res, next){
-  res.render('poems-by-author', { /* TO-DO: Poem data so we can display all poems, grouped by author */ });
-});
-
-server.get('/poems-by-tag', function(req, res, next){
-  res.render('poems-by-tag', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ });
-});
-
 server.get('/vote', function(req, res, next){
   res.render('vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
-});
-
-server.get('/poem/:id', function(req, res, next){
-  res.render('poem', { /* TO-DO: SPECIFIC POEM OBJECT */ });
-});
-
-server.get('/poem/:id/edit', function(req, res, next){
-  res.render('edit', { /* TO-DO: SPECIFIC POEM OBJECT */ })
 });
 
 // server listen and mongoose connect
