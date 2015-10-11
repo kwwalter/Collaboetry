@@ -48,6 +48,17 @@ server.use(bodyParser.urlencoded({
 
 server.use(methodOverride('_method'));
 
+// SUPER LOGGER
+
+server.use(function(req, res, next){
+  console.log("*************** [ REQ START ] ***************");
+  console.log("REQ DOT BODY: \n", req.body);
+  console.log("REQ DOT PARAMS: \n", req.params);
+  console.log("REQ DOT SESSION: \n", req.session);
+  console.log("*************** [ REQ END ] ***************");
+  next();
+});
+
 // specific routes--starting with a test one
 
 server.get('/wicked-secret-test', function(req, res){
@@ -60,6 +71,8 @@ server.use('/users', userController);
 server.use('/poems', poemController);
 
 server.get('/home/:id', function(req, res){
+  var currentUserID = req.params.id;
+
   res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
 });
 
