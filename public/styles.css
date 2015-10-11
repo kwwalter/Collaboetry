@@ -41,7 +41,7 @@ p {
 
 .site-header {
   height: 5rem;
-  width: 80%;
+  width: 85%;
   margin: 1rem auto;
   padding-bottom: 3rem;
   font-family: AmaticBold, fantasy;
@@ -59,7 +59,7 @@ p {
   font-size: 2rem;
   list-style: none;
   display: inline-block;
-  padding: 2rem;
+  padding: 2rem .5rem;
 }
 
 .site-header a:hover {

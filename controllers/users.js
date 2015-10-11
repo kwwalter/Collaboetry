@@ -57,4 +57,25 @@ router.get('/login-fail', function(req, res){
   res.render('users/login-fail');
 });
 
+router.get('/signout', function(req, res) {
+  req.session.currentUser = null; 
+  res.render('users/signout');
+});
+
+router.post('/signout', function(req, res) {
+  var newUser = User(req.body.user);
+
+  newUser.save(function(err, user) {
+    if (err) {
+      console.log("There was an error saving this user to the database: \n", err);
+      res.redirect(302, '/users/signup-fail');
+      res.end();
+    } else {
+      console.log(user.userName, " successfully saved!");
+      req.session.currentUser = foundUser._id;
+      res.redirect(302, '../new-user' + "/" + user._id);
+    }
+  });
+});
+
 module.exports = router;
