@@ -18,6 +18,7 @@ router.post('/signup', function(req, res) {
       res.end();
     } else {
       console.log(user.userName, " successfully saved!");
+      req.session.currentUser = foundUser._id;
       res.redirect(302, '../new-user' + "/" + user._id);
     }
   });
@@ -36,12 +37,12 @@ router.post('/login', function(req, res){
   console.log("user trying to log in as: \n", attemptedLogin);
 
   User.findOne( {
-    username: attemptedLogin
+    username: attemptedLogin.username
   }, function(err, foundUser){
       if (foundUser && foundUser.password === attemptedLogin.password) {
         console.log(foundUser, "user found in database, and passwords match..");
 
-        req.session.currentUser = foundUser.username;
+        req.session.currentUser = foundUser._id;
 
         res.redirect(302, '../home' + "/" + foundUser._id);
 

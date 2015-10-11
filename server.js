@@ -71,8 +71,6 @@ server.use('/users', userController);
 server.use('/poems', poemController);
 
 server.get('/home/:id', function(req, res){
-  req.session.id = req.params.id;
-
   res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
 });
 
@@ -87,8 +85,6 @@ server.get('/home', function(req, res){
 });
 
 server.get('/new-user/:id', function(req, res){
-  req.session.id = req.params.id;
-
   res.render('new-user', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
 });
 
