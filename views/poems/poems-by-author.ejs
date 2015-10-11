@@ -1,10 +1,8 @@
-<h1 class="poems-by-H1">All poems grouped by specific authors</h1>
-<h2><% poems[0].authorName %></h2>
+<h1 class="poems-by-H1">All poems grouped by authors</h1>
+
 <% poems.forEach(function(poem){ %>
   <div class="poems-by-author">
+    <h2><% poem.authorName %></h2>
     </h3><a href="/poems-by-author/<%= poetID %>/<%= poem._id %>"><%= poem.title %></h3>
-    <!-- <h2>Author #1</h2>
-    <h3>Their poem #1</h3>
-    <h3>poem #2, etc.</h3> -->
   </div>
 <% }); %>

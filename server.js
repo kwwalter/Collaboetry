@@ -71,18 +71,23 @@ server.use('/users', userController);
 server.use('/poems', poemController);
 
 server.get('/home/:id', function(req, res){
-  var currentUserID = req.params.id;
+  req.session.id = req.params.id;
 
   res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
 });
 
+server.get('/', function(req, res){
+  console.log("have to log in. redirecting..");
+  res.redirect(302, '/users/login');
+});
+
 server.get('/home', function(req, res){
   console.log("have to log in. redirecting..");
-  res.redirect(302, '/users/login'); 
+  res.redirect(302, '/users/login');
 });
 
 server.get('/new-user/:id', function(req, res){
-  var currentUserID = req.params.id;
+  req.session.id = req.params.id;
 
   res.render('new-user', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
 });

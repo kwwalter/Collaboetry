@@ -8,7 +8,17 @@ var express = require('express'),
 // for a listing of all poems, grouped by author
 
 router.get('/poems-by-author', function(req, res){
-  res.render('poems-by-author', { /* TO-DO: Poem data so we can display all poems by this particular author */ });
+  // grab all the poems
+  Poem.find({}, function(err, allThePoems){
+    if (err) {
+      console.log("Error retrieving all poems from database..");
+      res.end();
+    } else {
+      res.render('poems/poems-by-author', {
+        poems: allThePoems
+      });
+    }
+  });
 });
 
 // this route will grab all poems by a specific author
@@ -51,6 +61,14 @@ router.get('/poems-by-tag/:tag', function(req, res){
       });
     }
   });
+});
+
+router.get('/new', function(req, res, next) {
+  res.render('poems/post-new-poem');
+});
+
+router.post('/new', function(req, res, next) {
+  // submitting new form here. 
 });
 
 router.get('/poem/:id', function(req, res, next){

@@ -13,15 +13,19 @@ router.post('/signup', function(req, res) {
 
   newUser.save(function(err, user) {
     if (err) {
-      console.log("There was an error saving this user to the database");
-      res.redirect(302, '/signup');
+      console.log("There was an error saving this user to the database: \n", err);
+      res.redirect(302, '/users/signup-fail');
       res.end();
     } else {
       console.log(user.userName, " successfully saved!");
-      res.redirect(302, './new-user' + "/" + foundUser._id);
+      res.redirect(302, '../new-user' + "/" + user._id);
     }
   });
 });
+
+router.get('/signup-fail', function(req, res) {
+  res.render('users/signup-fail')
+})
 
 router.get('/login', function(req, res){
   res.render('users/login');
@@ -29,6 +33,7 @@ router.get('/login', function(req, res){
 
 router.post('/login', function(req, res){
   var attemptedLogin = req.body.user;
+  console.log("user trying to log in as: \n", attemptedLogin);
 
   User.findOne( {
     username: attemptedLogin
@@ -38,7 +43,7 @@ router.post('/login', function(req, res){
 
         req.session.currentUser = foundUser.username;
 
-        res.redirect(302, './home' + "/" + foundUser._id);
+        res.redirect(302, '../home' + "/" + foundUser._id);
 
       } else {
         console.log("Error locating this user in the database OR password didn't match");

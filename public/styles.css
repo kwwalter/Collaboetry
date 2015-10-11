@@ -31,6 +31,7 @@ body {
 
 h1 {
   font-size: 7rem;
+	text-align: center;
 }
 
 p {
@@ -69,10 +70,6 @@ p {
   margin-left: 1.5rem;
 }
 
-.poems-by-H1 {
-  text-align: center;
-}
-
 .poems-by-author, .poems-by-tag {
   width: 60%;
   margin: 0 auto;
@@ -81,10 +78,6 @@ p {
 
 .poems-by-author *, .poems-by-tag * {
   margin-left: 0.5rem;
-}
-
-.voting-stuff h1 {
-  text-align: center;
 }
 
 /*login & signup forms*/

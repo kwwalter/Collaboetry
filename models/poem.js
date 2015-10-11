@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
 
 var poemSchema = Schema({
   authorName: { type: String, required: true },
-  poemContent: { type: String, required: true }
+  content: { type: String, required: true },
+  tags: [ String ]
 });
 
 var Poem = mongoose.model("Poem", poemSchema);
