@@ -13,7 +13,7 @@ router.get('/poems-by-author/:id', function(req, res){
   }, function(err, foundPoems) {
     if (err) {
       console.log("Error finding poems by author with id: ", req.params.id);
-      res.redirect('./home');
+      res.redirect('home');
     } else {
       //redirect to poems by this author
       var poetID = req.params.id;

@@ -55,9 +55,8 @@ server.get('/wicked-secret-test', function(req, res){
   res.end();
 });
 
-server.get('/home', function(req, res, next){
+server.get('/home/:id', function(req, res){
   res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
-  next();
 });
 
 // server listen and mongoose connect

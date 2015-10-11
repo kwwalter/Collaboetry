@@ -1,0 +1,14 @@
+<h1>Your username and password didn't match anything in our database. Please try to log in again.</h1>
+
+<form action="/users/login" method="post">
+  <input type="text"
+         name="user[username]"
+         placeholder="Enter your username here">
+  <input type="password"
+         name="user[password]"
+         placeholder="your password here">
+  <input type="submit" value="Log in!">
+</form>
+
+<h2>First time user?</h2>
+<h3>Click <a href="/users/signup">here</a> to create an account</h3>
