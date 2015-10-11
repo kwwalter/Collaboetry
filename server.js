@@ -1,11 +1,12 @@
 // requiring all the things
 
-var express = require('express'),
-    morgan = require('morgan'),
-    bodyParser = require('body-parser'),
-    ejs = require('ejs'),
+var express           = require('express'),
+    morgan            = require('morgan'),
+    bodyParser        = require('body-parser'),
+    ejs               = require('ejs'),
     expressEjsLayouts = require('express-ejs-layouts'),
-    methodOverride = require('method-override');
+    methodOverride    = require('method-override'),
+    session           = require('express-session');
 
 // server setup
 var PORT    = process.env.PORT || 3788,
@@ -18,12 +19,20 @@ var MONGOURI = process.env.MONGOLAB_URI || "mongodb://localhost:27017",
     mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
-mongoose.set('debug', true);
+// SET
 
-// set up
+mongoose.set('debug', true);
 
 server.set('views', './views');
 server.set('view engine', 'ejs');
+
+// USE
+
+server.use(session({
+  secret: "tanukidog",
+  resave: true,
+  saveUninitialized: false
+}));
 
 server.use(morgan('dev'));
 
