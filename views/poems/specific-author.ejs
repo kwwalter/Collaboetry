@@ -1,9 +1,9 @@
-<h1 class="poems-by-H1">All poems by <%= username %></h1>
+<h1 class="poems-by-H1">All poems by <%= authorName %></h1>
 <!-- TO-DO: link up Users so we can display the user's name in this h1 -->
 
 <% poems.forEach(function(poem){ %>
   <div class="poems-by-author">
     <!-- <h2><%= poem.username %></h2> -->
-  <h2><a href="/poems-by-author/<%= poem.poetID %>/<%= poem._id %>"><%= poem.title %></a></h2>
+  <h2><a href="/authors/<%= poem.poetID %>/<%= poem._id %>"><%= poem.title %></a></h2>
   </div>
 <% }); %>

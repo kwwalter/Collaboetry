@@ -6,8 +6,9 @@ var poemSchema = Schema({
   title: String,
   content: { type: String, required: true },
   tags: [ String ],
-  poetID: { type: Schema.ObjectId, ref: 'User' }
-  // _username: String
+  poetID: { type: Schema.ObjectId, ref: 'User' },
+  authorName: String,
+  oldVersions: [ String ]
 }, { strict: false } );
 
 var Poem = mongoose.model("Poem", poemSchema);

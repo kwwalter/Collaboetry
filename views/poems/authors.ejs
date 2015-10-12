@@ -1,0 +1,8 @@
+<h1 class="poems-by-H1">All of our Authors</h1>
+
+<% poems.forEach(function(poem){ %>
+  <div class="poems-by-author">
+    <h2><%= poem.authorName %></h2>
+    <h2><a href="/authors/<%= poem.poetID %>/<%= poem._id %>"><%= poem.title %></a></h2>
+  </div>
+<% }); %>

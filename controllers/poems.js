@@ -7,9 +7,9 @@ var express = require('express'),
 
 // if user wants to post a new poem..
 
-router.get('/post-new-poem', function(req, res) {
+router.get('/new', function(req, res) {
   if (req.session.currentUser) {
-    res.render('poems/post-new-poem');
+    res.render('poems/new');
   } else {
     res.redirect(302, '../users/login');
   }
@@ -36,7 +36,7 @@ router.get('/post-new-poem', function(req, res) {
 
 // user submits a new poem..
 
-router.post('/post-new-poem', function(req, res, next) {
+router.post('/new', function(req, res, next) {
   var poemOptions = req.body.poem;
   // var thisUsername = findUserName(req.session.currentUser);
 
@@ -46,7 +46,7 @@ router.post('/post-new-poem', function(req, res, next) {
 
   var newPoem = Poem(poemOptions);
   newPoem.poetID = req.session.currentUser;
-  newPoem.username = req.session.userName;
+  newPoem.authorName = req.session.username;
   // newPoem._username = findUserName(req.sessio.currentUser);
   // newPoem._username = "this is a test";
 
@@ -63,24 +63,49 @@ router.post('/post-new-poem', function(req, res, next) {
   newPoem.save(function(err, poem) {
     if (err) {
       console.log("There was an error saving this poem to the database: \n", err);
-      res.redirect(302, '/poems/post-new-poem-fail');
+      res.redirect(302, '/poems/new-fail');
       res.end();
     } else {
       console.log(poem.title, " successfully saved!");
-      res.redirect(302, '/poems/poems-by-author/' + poem.poetID);
+      res.redirect(302, '/poems/authors/' + poem.poetID);
     }
   });
 });
 
 // user gets an error posting poem..
 
-router.get('/post-new-poem-fail', function(req, res) {
-  res.render('poems/post-new-poem-fail');
+router.get('/new-fail', function(req, res) {
+  res.render('poems/new-fail');
+});
+
+// for a listing of all authors who have submitted poems
+
+router.get('/authors', function(req, res){
+  // grab all the poems
+  Poem.find({}, function(err, allThePoems){
+    if (err) {
+      console.log("Error retrieving all poems from database..");
+      res.end();
+    } else {
+      res.render('poems/authors', {
+        poems: allThePoems
+      });
+    }
+  }).sort( {
+      authorName: 1 })
+    .sort( {
+      title: 1 })
+    // .populate('_username')
+    .exec(function(err2) {
+      if (err2) {
+        console.log("There was an error sorting the data by author name");
+      }
+    });
 });
 
 // this route will grab all poems by a specific author
 
-router.get('/poems-by-author/:id', function(req, res) {
+router.get('/authors/:id', function(req, res) {
   Poem.find( {
     poetID: req.params.id
   }, function(err, foundPoems) {
@@ -89,9 +114,9 @@ router.get('/poems-by-author/:id', function(req, res) {
       res.redirect('./home');
     } else {
       //redirect to poems by this author after finding their user object in database
-      res.render('poems/poems-by-author-id', {
+      res.render('poems/specific-author', {
         poems: foundPoems,
-        username: req.session.username
+        authorName: foundPoems[0].authorName
       });
     }
   }).sort( {
@@ -104,36 +129,31 @@ router.get('/poems-by-author/:id', function(req, res) {
     });
 });
 
-// for a listing of all poems, grouped by author
+// show one individual poem
 
-router.get('/poems-by-author', function(req, res){
-  // grab all the poems
-  Poem.find({}, function(err, allThePoems){
+router.get('/authors/:authorID/:poemID', function(req, res){
+  Poem.find( {
+    _id: poemID
+  }, function(err, foundPoem) {
     if (err) {
-      console.log("Error retrieving all poems from database..");
-      res.end();
+      console.log("Error finding individual poem with id: ", req.params.poemID);
     } else {
-      res.render('poems/poems-by-author', {
-        poems: allThePoems
+      res.render('poems/show', {
+        poem: foundPoem
       });
     }
-  }).sort( {
-    title: 1 })
-    // .populate('_username')
-    .exec(function(err2) {
-      if (err2) {
-        console.log("There was an error sorting the data by author name");
-      }
-    });
+  });
 });
 
-router.get('/poems-by-tag', function(req, res, next){
-  res.render('poems/poems-by-tag', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ });
+// will show all tags that have been inputted by users during poem submission
+
+router.get('/tags', function(req, res, next){
+  res.render('poems/tags', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ });
 });
 
 // this route will grab all poems with a specific tag
 
-router.get('/poems-by-tag/:tag', function(req, res){
+router.get('/tags/:tag', function(req, res){
   User.find( {
     keywordTag: tag
   }, function(err, foundPoems) {
@@ -142,15 +162,11 @@ router.get('/poems-by-tag/:tag', function(req, res){
       res.redirect('./home');
     } else {
       //redirect to poems that have this tag
-      res.render('poems/poems-by-tag', {
+      res.render('poems/tags', {
         poems: foundPoems,
       });
     }
   });
-});
-
-router.get('/poem/:id', function(req, res, next){
-  res.render('poems/poem', { /* TO-DO: SPECIFIC POEM OBJECT */ });
 });
 
 router.get('/poem/:id/edit', function(req, res, next){
