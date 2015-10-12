@@ -46,6 +46,7 @@ router.post('/post-new-poem', function(req, res, next) {
 
   var newPoem = Poem(poemOptions);
   newPoem.poetID = req.session.currentUser;
+  newPoem.username = req.session.userName;
   // newPoem._username = findUserName(req.sessio.currentUser);
   // newPoem._username = "this is a test";
 
@@ -90,6 +91,7 @@ router.get('/poems-by-author/:id', function(req, res) {
       //redirect to poems by this author after finding their user object in database
       res.render('poems/poems-by-author-id', {
         poems: foundPoems,
+        username: req.session.username
       });
     }
   }).sort( {
