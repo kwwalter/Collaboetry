@@ -9,9 +9,9 @@ var express = require('express'),
 
 router.get('/post-new-poem', function(req, res) {
   if (req.session.currentUser) {
-    res.render('poems/post-new-poem'); 
+    res.render('poems/post-new-poem');
   } else {
-    res.redirect(302, './users/login')
+    res.redirect(302, '../users/login');
   }
 });
 

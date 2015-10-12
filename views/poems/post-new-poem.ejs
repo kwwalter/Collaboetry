@@ -1,19 +1,27 @@
 <h1>Post your latest masterpiece here!</h1>
 
+<script>
+  $('textarea.content').on('keyup', function (e) {
+    var output = marked( $(this).val() );
+
+    $('div.preview').html( output );
+  });
+</script>
 <div class="poem-form">
   <form action="/poems/new" method="post">
     <input type="text"
            name="poem[authorName]"
            placeholder="Enter your nomme de plume here"><br>
-    <input type="text"
-           name="poem[content]"
-           placeholder="all yr words!"><br>
+    <textarea class="content markdown"
+              name="poem[content]"></textarea>
+    <div class="content preview"></div>
     <input type="text"
            name="poem[tags][]"
            placeholder="Any keywords/tags you'd like to include?"><br>
     <input type="submit" value="Post it!">
   </form>
 </div>
-
+<div class="go-back">
 <h2>Change your mind?</h2>
 <h3>Click <a href="/poems/poems-by-author">here</a> to go read stuff by other people</h3>
+</div>
