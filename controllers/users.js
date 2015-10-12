@@ -18,7 +18,7 @@ router.post('/signup', function(req, res) {
       res.end();
     } else {
       console.log(user.userName, " successfully saved!");
-      req.session.currentUser = foundUser._id;
+      req.session.currentUser = user._id;
       res.redirect(302, '../new-user' + "/" + user._id);
     }
   });
@@ -58,7 +58,7 @@ router.get('/login-fail', function(req, res){
 });
 
 router.get('/signout', function(req, res) {
-  req.session.currentUser = null; 
+  req.session.currentUser = null;
   res.render('users/signout');
 });
 
