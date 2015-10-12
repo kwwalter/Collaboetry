@@ -1,3 +1,5 @@
-<h1><%= poem.authorName %></h1>
-<h2><%= poem.title %></h2>
-<p><%= poem.content %></p>
+<div class="show-poem">
+  <h1><%= poem[0].title %></h1>
+  <h2>by: <%= poem[0].authorName %></h2>
+  <div><%= marked(poem[0].content) %></div>
+</div>

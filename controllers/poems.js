@@ -133,11 +133,12 @@ router.get('/authors/:id', function(req, res) {
 
 router.get('/authors/:authorID/:poemID', function(req, res){
   Poem.find( {
-    _id: poemID
+    _id: req.params.poemID
   }, function(err, foundPoem) {
     if (err) {
       console.log("Error finding individual poem with id: ", req.params.poemID);
     } else {
+      console.log("found poem is: ", foundPoem);
       res.render('poems/show', {
         poem: foundPoem
       });
