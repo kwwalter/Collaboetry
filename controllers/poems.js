@@ -18,9 +18,12 @@ router.get('/post-new-poem', function(req, res) {
 // user submits a new poem..
 
 router.post('/post-new-poem', function(req, res, next) {
-  // req.body.poem.poetID = req.session.currentUser;
+  var poemOptions = req.body.poem;
 
-  var newPoem = Poem(req.body.poem);
+  // to split up the tags input and put em in an array for easier access later..
+  poemOptions.tags = poemOptions.tags[0].split(/, \s?/);
+
+  var newPoem = Poem(poemOptions);
   newPoem.poetID = req.session.currentUser;
 
   newPoem.save(function(err, poem) {
