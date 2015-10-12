@@ -3,10 +3,10 @@ var mongoose = require('mongoose'),
 
 var poemSchema = Schema({
   authorName: { type: String, required: true },
-  title: String, 
+  title: String,
   content: { type: String, required: true },
-  tags: [ String ]
-});
+  tags: [ String ],
+}, { strict: false } );
 
 var Poem = mongoose.model("Poem", poemSchema);
 

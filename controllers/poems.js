@@ -15,11 +15,12 @@ router.get('/post-new-poem', function(req, res) {
   }
 });
 
-// user submits a form for a new poem..
+// user submits a new poem..
 
 router.post('/post-new-poem', function(req, res, next) {
+  req.body.poem.poetID = req.session.currentUser;
+
   var newPoem = Poem(req.body.poem);
-  newPoem.poetID = req.session.currentUser;
 
   newPoem.save(function(err, poem) {
     if (err) {
@@ -28,7 +29,7 @@ router.post('/post-new-poem', function(req, res, next) {
       res.end();
     } else {
       console.log(poem.title, " successfully saved!");
-      res.redirect(302, '/poems-by-author' + "/" + poem.poetID);
+      res.redirect(302, '/poems-by-author/' + poem.poetID);
     }
   });
 });
@@ -37,6 +38,24 @@ router.post('/post-new-poem', function(req, res, next) {
 
 router.get('/post-new-poem-fail', function(req, res) {
   res.render('poems/post-new-poem-fail');
+});
+
+// this route will grab all poems by a specific author
+
+router.get('/poems-by-author/:id', function(req, res) {
+  Poem.find( {
+    poetID: req.params.id
+  }, function(err, foundPoems) {
+    if (err) {
+      console.log("Error finding poems by author with id: ", req.params.id);
+      res.redirect('./home');
+    } else {
+      //redirect to poems by this author after finding their user object in database
+      res.render('poems/poems-by-author', {
+        poems: foundPoems,
+      });
+    }
+  });
 });
 
 // for a listing of all poems, grouped by author
@@ -50,26 +69,6 @@ router.get('/poems-by-author', function(req, res){
     } else {
       res.render('poems/poems-by-author', {
         poems: allThePoems
-      });
-    }
-  });
-});
-
-// this route will grab all poems by a specific author
-
-router.get('/poems-by-author/:id', function(req, res){
-  Poem.find( {
-    _id: req.params.id
-  }, function(err, foundPoems) {
-    if (err) {
-      console.log("Error finding poems by author with id: ", req.params.id);
-      res.redirect('./home');
-    } else {
-      //redirect to poems by this author
-      var poetID = req.params.id;
-      res.render('poems/poems-by-author', {
-        poems: foundPoems,
-        poetID: poetID
       });
     }
   });
