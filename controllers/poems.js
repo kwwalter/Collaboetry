@@ -59,7 +59,13 @@ router.get('/poems-by-author/:id', function(req, res) {
         poems: foundPoems,
       });
     }
-  });
+  }).sort( {
+    authorName: 1 })
+    .exec(function(err2) {
+      if (err2) {
+        console.log("There was an error sorting the data by author name");
+      }
+    });
 });
 
 // for a listing of all poems, grouped by author
@@ -75,7 +81,13 @@ router.get('/poems-by-author', function(req, res){
         poems: allThePoems
       });
     }
-  });
+  }).sort( {
+    authorName: 1 })
+    .exec(function(err2) {
+      if (err2) {
+        console.log("There was an error sorting the data by author name");
+      }
+    });
 });
 
 router.get('/poems-by-tag', function(req, res, next){
