@@ -1,16 +1,17 @@
 <h1>Post your latest masterpiece here!</h1>
 
-<script>
-  $('textarea.content').on('keyup', function (e) {
-    var output = marked( $(this).val() );
+<div class="poem-submit-note">
+  <p>NOTE: this field uses Markdown formatting. You can use tags to format the text to your heart's content, and the formatted text will appear on the right.</p>
+  <p>For information on Markdown, check out <a href="http://markdowntutorial.com/">this tutorial</a>.</p>
+</div>
 
-    $('div.preview').html( output );
-  });
-</script>
 <div class="poem-form">
   <form action="/poems/new" method="post">
     <input type="text"
            name="poem[authorName]"
+           placeholder="Enter your nomme de plume here"><br>
+    <input type="text"
+           name="poem[title]"
            placeholder="Enter your nomme de plume here"><br>
     <textarea class="content markdown"
               name="poem[content]"></textarea>
@@ -18,7 +19,7 @@
     <input type="text"
            name="poem[tags][]"
            placeholder="Any keywords/tags you'd like to include?"><br>
-    <input type="submit" value="Post it!">
+    <input type="submit" value="Post it!"><br>
   </form>
 </div>
 <div class="go-back">

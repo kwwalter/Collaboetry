@@ -20,6 +20,13 @@
       </ul>
     </header><br><br>
     <%- body %>
+    <script>
+      $('textarea.content').on('keyup', function (e) {
+        var output = marked( $(this).val() );
+
+        $('div.preview').html( output );
+      });
+    </script>
   </body>
 </html>
 
