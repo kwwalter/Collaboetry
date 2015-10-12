@@ -18,9 +18,10 @@ router.get('/post-new-poem', function(req, res) {
 // user submits a new poem..
 
 router.post('/post-new-poem', function(req, res, next) {
-  req.body.poem.poetID = req.session.currentUser;
+  // req.body.poem.poetID = req.session.currentUser;
 
   var newPoem = Poem(req.body.poem);
+  newPoem.poetID = req.session.currentUser;
 
   newPoem.save(function(err, poem) {
     if (err) {
@@ -29,7 +30,7 @@ router.post('/post-new-poem', function(req, res, next) {
       res.end();
     } else {
       console.log(poem.title, " successfully saved!");
-      res.redirect(302, '/poems-by-author/' + poem.poetID);
+      res.redirect(302, '/poems/poems-by-author/' + poem.poetID);
     }
   });
 });
@@ -51,7 +52,7 @@ router.get('/poems-by-author/:id', function(req, res) {
       res.redirect('./home');
     } else {
       //redirect to poems by this author after finding their user object in database
-      res.render('poems/poems-by-author', {
+      res.render('poems/poems-by-author-id', {
         poems: foundPoems,
       });
     }
