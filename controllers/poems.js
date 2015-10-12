@@ -15,16 +15,49 @@ router.get('/post-new-poem', function(req, res) {
   }
 });
 
+
+// function to find a username based on ID..
+
+// var findUserName = function() {
+//   var returnUsername = "";
+//
+//   User.find( {
+//     _id: req.session.currentUser
+//   }, function(err, user) {
+//     if (err) {
+//       console.log("There was an error finding this user in the database");
+//     } else {
+//       returnUsername = user.username;
+//     }
+//   });
+//
+//   return returnUsername;
+// };
+
 // user submits a new poem..
 
 router.post('/post-new-poem', function(req, res, next) {
   var poemOptions = req.body.poem;
+  // var thisUsername = findUserName(req.session.currentUser);
 
   // to split up the tags input and put em in an array for easier access later..
   poemOptions.tags = poemOptions.tags[0].split(/, \s?/);
+  // poemOptions.username = thisUsername;
 
   var newPoem = Poem(poemOptions);
   newPoem.poetID = req.session.currentUser;
+  // newPoem._username = findUserName(req.sessio.currentUser);
+  // newPoem._username = "this is a test";
+
+  // User.find( {
+  //   _id: req.session.currentUser
+  // }, function(err, user) {
+  //   if (err) {
+  //     console.log("There was an error finding this user in the database");
+  //   } else {
+  //     newPoem._username = user.username;
+  //   }
+  // });
 
   newPoem.save(function(err, poem) {
     if (err) {
@@ -60,7 +93,8 @@ router.get('/poems-by-author/:id', function(req, res) {
       });
     }
   }).sort( {
-    authorName: 1 })
+    title: 1 })
+    // .populate('_username')
     .exec(function(err2) {
       if (err2) {
         console.log("There was an error sorting the data by author name");
@@ -82,7 +116,8 @@ router.get('/poems-by-author', function(req, res){
       });
     }
   }).sort( {
-    authorName: 1 })
+    title: 1 })
+    // .populate('_username')
     .exec(function(err2) {
       if (err2) {
         console.log("There was an error sorting the data by author name");

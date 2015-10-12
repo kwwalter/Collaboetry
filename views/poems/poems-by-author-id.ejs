@@ -3,7 +3,7 @@
 
 <% poems.forEach(function(poem){ %>
   <div class="poems-by-author">
-    <h2><%= poem.authorName %></h2>
+    <h2><%= poem.username %></h2>
   </h3><a href="/poems-by-author/<%= poem.poetID %>/<%= poem._id %>"><%= poem.title %></a></h3>
   </div>
 <% }); %>
