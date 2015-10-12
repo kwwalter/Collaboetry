@@ -5,6 +5,16 @@ var express = require('express'),
 
 // routes for this router
 
+// if user wants to post a new poem..
+
+router.get('/post-new-poem', function(req, res) {
+  if (req.session.currentUser) {
+    res.render('poems/post-new-poem'); 
+  } else {
+    res.redirect(302, './users/login')
+  }
+});
+
 // for a listing of all poems, grouped by author
 
 router.get('/poems-by-author', function(req, res){
@@ -68,7 +78,7 @@ router.get('/new', function(req, res, next) {
 });
 
 router.post('/new', function(req, res, next) {
-  // submitting new form here. 
+  // submitting new form here.
 });
 
 router.get('/poem/:id', function(req, res, next){
