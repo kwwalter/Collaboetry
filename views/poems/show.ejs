@@ -2,5 +2,9 @@
 <div class="show-poem">
   <h1><%= poem[0].title %></h1>
   <h2>by: <%= poem[0].authorName %> <a href='mailto:<%= poem[0].authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem[0].title %>"'>(Contact this sucka!)</a></h2>
-  <textarea readonly><%= poem[0].content %></textarea>
-</div>
+  <textarea readonly
+            class="show-poem-textarea"><%= poem[0].content %></textarea>
+  <textarea readonly
+            class="show-poem-comments">
+            COMMENTS FROM THE AUTHOR: <%= poem[0].comments %></textarea><br>
+  <a href='/poems/authors/<%= poem[0].poetID %>/<%= poem[0]._id %>/edit'>Suggest an edit to this poem?</a>

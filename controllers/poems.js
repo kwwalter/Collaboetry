@@ -47,7 +47,7 @@ router.post('/new', function(req, res, next) {
   var newPoem = Poem(poemOptions);
   newPoem.poetID = req.session.currentUser;
   newPoem.authorName = req.session.username;
-  newPoem.authorEmail = req.session.email; 
+  newPoem.authorEmail = req.session.email;
   // newPoem._username = findUserName(req.sessio.currentUser);
   // newPoem._username = "this is a test";
 
@@ -141,6 +141,23 @@ router.get('/authors/:authorID/:poemID', function(req, res){
     } else {
       console.log("found poem is: ", foundPoem);
       res.render('poems/show', {
+        poem: foundPoem
+      });
+    }
+  });
+});
+
+// edit that one individual poem
+
+router.get('/authors/:authorID/:poemID/edit', function(req, res){
+  Poem.find( {
+    _id: req.params.poemID
+  }, function(err, foundPoem) {
+    if (err) {
+      console.log("Error finding individual poem with id: ", req.params.poemID);
+    } else {
+      console.log("found poem is: ", foundPoem);
+      res.render('poems/edit', {
         poem: foundPoem
       });
     }

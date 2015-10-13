@@ -131,7 +131,7 @@ p {
 	margin-left: 10.5rem;
 	resize: none;
 	padding: 0.5rem;
-	background-color: #FFFAFA; 
+	background-color: #FFFAFA;
 }
 
 .poem-form input[type="submit"] {
@@ -196,7 +196,7 @@ div.preview {
 	font-size: 2rem;
 }
 
-.show-poem textarea {
+.show-poem-textarea {
 	font-size: 2rem;
 	width: 80%;
 	height: 400px;
@@ -204,4 +204,15 @@ div.preview {
 	margin: 0 auto;
 	padding: 1rem;
 	background-color: #FFFAFA;
+	margin-bottom: 2rem;
+}
+
+.show-poem-comments {
+	padding: 1rem;
+	height: 10rem;
+	width: 80%;
+	font-size: 2rem;
+	resize: none;
+	background-color: #FFFAFA;
+	margin-bottom: 1.5rem;
 }
