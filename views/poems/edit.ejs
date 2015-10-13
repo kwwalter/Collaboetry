@@ -9,9 +9,9 @@
   <form action="/poems/authors/<%= authorID %>/<%= poemID %>/edit?_method=PATCH" method="post">
     <input type="text"
            name="poem[title]"
-           value="<%= poem[0].title %>"><br>
+           value="<%= poem.title %>"><br>
     <textarea class="content markdown"
-              name="poem[content][]"><%= poem[0].content[0] %></textarea>
+              name="poem[content][<%= contentLength %>]"><%= poem.content[0] %></textarea>
     <div class="content preview"
         id="please-work"></div>
     <!-- <input type="text"
@@ -19,9 +19,9 @@
            placeholder="Any keywords/tags you'd like to include?"><br> -->
     <textarea readonly
            class="poem-comments">
-           Comments from <%= poem[0].authorName %>: <%= poem[0].comments[0] %></textarea><br>
+           Comments from <%= poem.authorName %>: <%= poem.comments[0] %></textarea><br>
     <textarea class="poem-comments"
-           name="poem[comments][]"
+           name="poem[comments][][<%= commentsLength %>]"
            placeholder="Any comments to add?">Comment from <%= currentUsername %>: </textarea><br>
     <input type="submit" value="Post your edit!"><br>
   </form>

@@ -107,7 +107,7 @@ router.get('/authors', function(req, res){
 // this route will grab all poems by a specific author
 
 router.get('/authors/:id', function(req, res) {
-  Poem.find( {
+  Poem.findOne( {
     poetID: req.params.id
   }, function(err, foundPoems) {
     if (err) {
@@ -117,7 +117,7 @@ router.get('/authors/:id', function(req, res) {
       //redirect to poems by this author after finding their user object in database
       res.render('poems/specific-author', {
         poems: foundPoems,
-        authorName: foundPoems[0].authorName
+        authorName: foundPoems.authorName
       });
     }
   }).sort( {
@@ -133,7 +133,7 @@ router.get('/authors/:id', function(req, res) {
 // show one individual poem
 
 router.get('/authors/:authorID/:poemID', function(req, res){
-  Poem.find( {
+  Poem.findOne( {
     _id: req.params.poemID
   }, function(err, foundPoem) {
     if (err) {
@@ -150,7 +150,7 @@ router.get('/authors/:authorID/:poemID', function(req, res){
 // edit that one individual poem
 
 router.get('/authors/:authorID/:poemID/edit', function(req, res){
-  Poem.find( {
+  Poem.findOne( {
     _id: req.params.poemID
   }, function(err, foundPoem) {
     if (err) {
@@ -161,7 +161,9 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res){
         poem: foundPoem,
         currentUsername: req.session.username,
         authorID: req.params.authorID,
-        poemID: req.params.poemID
+        poemID: req.params.poemID,
+        contentLength: foundPoem.content.length,
+        commentsLength: foundPoem.comments.length
       });
     }
   });

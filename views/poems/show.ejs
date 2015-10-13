@@ -1,10 +1,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
 <div class="show-poem">
-  <h1><%= poem[0].title %></h1>
-  <h2>by: <%= poem[0].authorName %> <a href='mailto:<%= poem[0].authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem[0].title %>"'>(Contact this sucka!)</a></h2>
+  <h1><%= poem.title %></h1>
+  <h2>by: <%= poem.authorName %> <a href='mailto:<%= poem.authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem.title %>"'>(Contact this sucka!)</a></h2>
   <textarea readonly
-            class="show-poem-textarea"><%= poem[0].content %></textarea>
+            class="show-poem-textarea"><%= poem.content %></textarea>
   <textarea readonly
             class="show-poem-comments">
-            COMMENTS FROM THE AUTHOR: <%= poem[0].comments %></textarea><br>
-  <a href='/poems/authors/<%= poem[0].poetID %>/<%= poem[0]._id %>/edit'>Suggest an edit to this poem?</a>
+            COMMENTS FROM THE AUTHOR: <%= poem.comments %></textarea><br>
+  <a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/edit'>Suggest an edit to this poem?</a>
