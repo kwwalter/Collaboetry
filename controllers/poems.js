@@ -107,7 +107,7 @@ router.get('/authors', function(req, res){
 // this route will grab all poems by a specific author
 
 router.get('/authors/:id', function(req, res) {
-  Poem.findOne( {
+  Poem.find( {
     poetID: req.params.id
   }, function(err, foundPoems) {
     if (err) {
@@ -117,7 +117,7 @@ router.get('/authors/:id', function(req, res) {
       //redirect to poems by this author after finding their user object in database
       res.render('poems/specific-author', {
         poems: foundPoems,
-        authorName: foundPoems.authorName
+        authorName: foundPoems[0].authorName
       });
     }
   }).sort( {
