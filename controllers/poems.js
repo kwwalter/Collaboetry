@@ -57,9 +57,6 @@ router.post('/new', function(req, res, next) {
   newPoem.previousVersions.push( { title, content  });
   newPoem.commentsHistory.push( { username, comments } );
 
-  // newPoem._username = findUserName(req.sessio.currentUser);
-  // newPoem._username = "this is a test";
-
   // User.find( {
   //   _id: req.session.currentUser
   // }, function(err, user) {
@@ -186,17 +183,7 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
       content = req.body.poem.content,
       comments = req.body.poem.comments,
       username = req.session.username;
-
-  // trying to keep a record of all content and comments
-  // editedPoemParams.ContentHistory.push(editedPoemParams.content);
-  // editedPoemParams.CommentsHistory.push(editedPoemParams.comments);
-
-  // var newPoem = Poem(editedPoemParams);
-  // newPoem.contentHistory.push(newPoem.content);
-  // newPoem.commentsHistory.push(newPoem.comments);
-  //
-  // newPoem.previousVersions.push( { title, content  });
-  // newPoem.commentsHistory.push( { username, comments } );
+      console.log("username is :", username);
 
   Poem.findOneAndUpdate( {
     _id: req.params.poemID
@@ -206,23 +193,8 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
     if (err) {
       console.log("could not find the poem to update!", err);
     } else {
-      // trying to keep a record of all content and comments
-      // foundPoemToUpdate.ContentHistory.push(content);
-      // foundPoemToUpdate.CommentsHistory.push(comments);
-
-      // foundPoemToUpdate.update(
-      //   editedPoemParams,
-      //   { $push : { 'commentsHistory': { comments } } },
-      //   { $push : { 'contentHistory': { content } } },
-      //   function(errTwo, poem){
-      //     if (errTwo) {
-      //       console.log("error updating your poem!", errTwo);
-      //     } else {
-
-            console.log("updated!");
-            res.redirect(302, '/poems/authors');
-      //     }
-      // });
+      console.log("updated!");
+      res.redirect(302, '/poems/authors');
     }
   });
 });

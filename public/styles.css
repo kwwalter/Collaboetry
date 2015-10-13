@@ -175,7 +175,7 @@ div.preview h1 {
 }
 
 div.preview p {
-	font-family: 'Open Sans Condensed'; 
+	font-family: 'Open Sans Condensed';
 }
 
 .go-back {
@@ -231,4 +231,9 @@ div.preview p {
 	resize: none;
 	background-color: #FFFAFA;
 	margin-bottom: 1.5rem;
+}
+
+.suggest-edit {
+  text-align: center;
+	font-size: 4rem; 
 }
