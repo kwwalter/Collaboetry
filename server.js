@@ -9,7 +9,7 @@ var express           = require('express'),
     session           = require('express-session'),
     markdownIT        = require('markdown-it'),
     md                = new markdownIT(),
-    marked            = require('marked'), 
+    marked            = require('marked'),
     poemController    = require('./controllers/poems.js'),
     userController    = require('./controllers/users.js');
 
@@ -98,10 +98,10 @@ server.get('/new-user/:id', function(req, res){
 
 // failsafe in case someone gets to where they're not supposed to be..
 
-// server.use(function(req, res, next){
-//   res.write("You've reached the end of the road, pal.");
-//   res.end();
-// })
+server.use(function(req, res, next){
+  res.write("You've reached the end of the road, pal.");
+  res.end();
+})
 
 // server listen and mongoose connect
 

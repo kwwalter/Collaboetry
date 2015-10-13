@@ -158,7 +158,8 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res){
     } else {
       console.log("found poem is: ", foundPoem);
       res.render('poems/edit', {
-        poem: foundPoem
+        poem: foundPoem,
+        currentUsername: req.session.username
       });
     }
   });

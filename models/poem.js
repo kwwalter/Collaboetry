@@ -4,9 +4,9 @@ var mongoose = require('mongoose'),
 var poemSchema = Schema({
   // authorName: { type: String, required: true }, // only had this in here in case someone wants to use a pen name separate from login name--but that's dumb!
   title: String,
-  content: { type: String, required: true },
+  content: [ { type: String, required: true } ],
   tags: [ String ],
-  comments: String, 
+  comments: [ String ], 
   poetID: { type: Schema.ObjectId, ref: 'User' },
   authorName: String,
   authorEmail: String,

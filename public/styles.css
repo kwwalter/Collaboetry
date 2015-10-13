@@ -82,7 +82,8 @@ p {
 .poems-by-author, .poems-by-tag {
   width: 60%;
   margin: 0 auto;
-  border: 2px dashed lightcoral;
+  border: 1px solid lightcoral;
+	margin-bottom: 1rem;
 }
 
 .poems-by-author *, .poems-by-tag * {
@@ -132,7 +133,7 @@ p {
 .poem-comments {
 	height: 10rem;
 	width: 80%;
-	font-size: 2rem;
+	font-size: 2.5rem;
 	margin-left: 10.5rem;
 	resize: none;
 	padding: 0.5rem;
@@ -165,6 +166,16 @@ p {
 
 div.preview {
 	font-family: 'Open Sans Condensed', sans-serif;
+	text-align: left;
+}
+
+div.preview h1 {
+	text-align: left;
+	font-size: 5rem;
+}
+
+div.preview p {
+	font-family: 'Open Sans Condensed'; 
 }
 
 .go-back {
