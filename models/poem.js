@@ -6,8 +6,10 @@ var poemSchema = Schema({
   title: String,
   content: { type: String, required: true },
   tags: [ String ],
+  comments: String, 
   poetID: { type: Schema.ObjectId, ref: 'User' },
   authorName: String,
+  authorEmail: String,
   oldVersions: [ String ]
 }, { strict: false } );
 

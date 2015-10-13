@@ -20,6 +20,7 @@ router.post('/signup', function(req, res) {
       console.log(user.userName, " successfully saved!");
       req.session.currentUser = user._id;
       req.session.username = user.username;
+      req.session.email = user.email;
       res.redirect(302, '../new-user' + "/" + user._id);
     }
   });
@@ -45,6 +46,7 @@ router.post('/login', function(req, res){
 
         req.session.currentUser = foundUser._id;
         req.session.username = foundUser.username;
+        req.session.email = foundUser.email;
 
         res.redirect(302, '../home' + "/" + foundUser._id);
 
@@ -62,6 +64,7 @@ router.get('/login-fail', function(req, res){
 router.get('/signout', function(req, res) {
   req.session.currentUser = null;
   req.session.username = null;
+  req.session.email = null;
   res.render('users/signout');
 });
 
@@ -77,6 +80,7 @@ router.post('/signout', function(req, res) {
       console.log(user.userName, " successfully saved!");
       req.session.currentUser = foundUser._id;
       req.session.username = foundUser.username;
+      req.session.email = foundUser.email; 
       res.redirect(302, '../new-user' + "/" + user._id);
     }
   });

@@ -47,6 +47,7 @@ router.post('/new', function(req, res, next) {
   var newPoem = Poem(poemOptions);
   newPoem.poetID = req.session.currentUser;
   newPoem.authorName = req.session.username;
+  newPoem.authorEmail = req.session.email; 
   // newPoem._username = findUserName(req.sessio.currentUser);
   // newPoem._username = "this is a test";
 

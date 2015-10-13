@@ -121,7 +121,17 @@ p {
 	width: 75%;
 	font-size: 2.5rem;
 	margin: 0.5rem auto;
-	background-color: floralwhite;
+	background-color: #FFFAFA;
+}
+
+.poem-comments {
+	height: 10rem;
+	width: 80%;
+	font-size: 2rem;
+	margin-left: 10.5rem;
+	resize: none;
+	padding: 0.5rem;
+	background-color: #FFFAFA; 
 }
 
 .poem-form input[type="submit"] {
@@ -131,7 +141,7 @@ p {
 	margin: 0.5rem auto;
 }
 
-.poem-form textarea {
+.markdown {
 	resize: none;
 }
 
@@ -160,22 +170,38 @@ div.preview {
 	text-align: center;
 }
 
+.go-back h2 {
+	text-align: center;
+}
+
 /* for individual poem */
 
 .show-poem {
 	width: 75%;
 	margin: 0 auto;
+	font-family: 'Open Sans Condensed';
+	font-weight: 200;
 }
 
 .show-poem h1, h2 {
 	text-align: left;
 }
 
-.show-poem div {
-	font-family: 'Open Sans Condensed';
+.show-poem h2 {
+	padding-left: 1rem;
+	padding-bottom: 1rem;
+}
+
+.show-poem a {
+	font-size: 2rem;
+}
+
+.show-poem textarea {
 	font-size: 2rem;
 	width: 80%;
 	height: 400px;
 	resize: none;
 	margin: 0 auto;
+	padding: 1rem;
+	background-color: #FFFAFA;
 }

@@ -1,6 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
 <div class="show-poem">
   <h1><%= poem[0].title %></h1>
-  <h2>by: <%= poem[0].authorName %></h2>
-  <div><%= marked(poem[0].content) %></div>
+  <h2>by: <%= poem[0].authorName %> <a href='mailto:<%= poem[0].authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem[0].title %>"'>(Contact this sucka!)</a></h2>
+  <textarea readonly><%= poem[0].content %></textarea>
 </div>

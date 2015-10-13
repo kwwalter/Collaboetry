@@ -8,7 +8,8 @@ var express           = require('express'),
     methodOverride    = require('method-override'),
     session           = require('express-session'),
     markdownIT        = require('markdown-it'),
-    md                = new markdownIT(); 
+    md                = new markdownIT(),
+    marked            = require('marked'), 
     poemController    = require('./controllers/poems.js'),
     userController    = require('./controllers/users.js');
 
