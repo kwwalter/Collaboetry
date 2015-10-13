@@ -1,18 +1,23 @@
 /* fonts from Google Fonts */
 
 @font-face {
-		font-family: AmaticBold;
-    src: url('fonts/AmaticSC-Bold.ttf');
+	font-family: AmaticBold;
+  src: url('fonts/AmaticSC-Bold.ttf');
 }
 
 @font-face {
-		font-family: AmaticStd;
-    src: url('fonts/AmaticSC-Regular.ttf');
+	font-family: AmaticStd;
+  src: url('fonts/AmaticSC-Regular.ttf');
 }
 
 @font-face {
-		font-family: Handwriting;
-    src: url('fonts/WaitingfortheSunrise.ttf');
+	font-family: Handwriting;
+  src: url('fonts/WaitingfortheSunrise.ttf');
+}
+
+@font-face {
+	font-family: Open Sans Condensed;
+	src: url('/fonts/OpenSans-CondLight.ttf');
 }
 
 /* regular stylin' */
@@ -24,7 +29,7 @@
 }
 
 body {
-  font-family: AmaticStd, fantasy;
+  font-family: AmaticStd, serif, fantasy;
   background: LightGoldenrodYellow;
   height: 100%;
 }
@@ -36,7 +41,7 @@ h1 {
 
 p {
   font-size: 2.5rem;
-  font-family: AmaticStd, fantasy;
+  font-family: AmaticStd, serif, fantasy;
 }
 
 .site-header {
@@ -44,7 +49,7 @@ p {
   width: 85%;
   margin: 1rem auto;
   padding-bottom: 3rem;
-  font-family: AmaticBold, fantasy;
+  font-family: AmaticBold, serif, fantasy;
   letter-spacing: 6px;
 }
 
