@@ -10,8 +10,10 @@ var poemSchema = Schema({
   poetID: { type: Schema.ObjectId, ref: 'User' },
   authorName: String,
   authorEmail: String,
-  ContentHistory: [ String ],
-  CommentsHistory: [ String ]
+  previousVersions: [ { title: String, content: String } ], 
+  // titleHistory: [ String ],
+  // contentHistory: [ String ],
+  commentsHistory: [ { commenterName: String, comments: String } ]
 }, { strict: false } );
 
 var Poem = mongoose.model("Poem", poemSchema);

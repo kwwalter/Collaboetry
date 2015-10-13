@@ -37,7 +37,12 @@ router.get('/new', function(req, res) {
 // user submits a new poem..
 
 router.post('/new', function(req, res, next) {
-  var poemOptions = req.body.poem;
+  var poemOptions = req.body.poem,
+      title = req.body.poem.title,
+      content = req.body.poem.content,
+      comments = req.body.poem.comments,
+      username = req.session.username;
+
   // var thisUsername = findUserName(req.session.currentUser);
 
   // to split up the tags input and put em in an array for easier access later..
@@ -48,9 +53,9 @@ router.post('/new', function(req, res, next) {
   newPoem.authorName = req.session.username;
   newPoem.authorEmail = req.session.email;
 
-  // trying to keep a record of all content and comments
-  newPoem.ContentHistory.push(newPoem.content);
-  newPoem.CommentsHistory.push(newPoem.comments);
+  // trying to keep a record of all titles, content, and comments
+  newPoem.previousVersions.push( { title, content  });
+  newPoem.commentsHistory.push( { username, comments } );
 
   // newPoem._username = findUserName(req.sessio.currentUser);
   // newPoem._username = "this is a test";
@@ -176,32 +181,48 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res){
 // PATCH request for edit poem
 
 router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
-  var editedPoemParams = req.body.poem;
-  var content = editedPoemParams.content;
-  var comments = editedPoemParams.comments;
+  var poemOptions = req.body.poem,
+      title = req.body.poem.title,
+      content = req.body.poem.content,
+      comments = req.body.poem.comments,
+      username = req.session.username;
 
   // trying to keep a record of all content and comments
   // editedPoemParams.ContentHistory.push(editedPoemParams.content);
   // editedPoemParams.CommentsHistory.push(editedPoemParams.comments);
 
-  Poem.findOne( {
+  // var newPoem = Poem(editedPoemParams);
+  // newPoem.contentHistory.push(newPoem.content);
+  // newPoem.commentsHistory.push(newPoem.comments);
+  //
+  // newPoem.previousVersions.push( { title, content  });
+  // newPoem.commentsHistory.push( { username, comments } );
+
+  Poem.findOneAndUpdate( {
     _id: req.params.poemID
-  }, function(err, foundPoemToUpdate){
+  }, { $push: { previousVersions: { title, content }, commentsHistory: { username, comments } }
+     },
+     function(err, model){
     if (err) {
       console.log("could not find the poem to update!", err);
     } else {
       // trying to keep a record of all content and comments
-      foundPoemToUpdate.ContentHistory.push(content);
-      foundPoemToUpdate.CommentsHistory.push(comments);
+      // foundPoemToUpdate.ContentHistory.push(content);
+      // foundPoemToUpdate.CommentsHistory.push(comments);
 
-      foundPoemToUpdate.update(editedPoemParams, function(errTwo, poem){
-          if (errTwo) {
-            console.log("error updating your poem!", errTwo);
-          } else {
+      // foundPoemToUpdate.update(
+      //   editedPoemParams,
+      //   { $push : { 'commentsHistory': { comments } } },
+      //   { $push : { 'contentHistory': { content } } },
+      //   function(errTwo, poem){
+      //     if (errTwo) {
+      //       console.log("error updating your poem!", errTwo);
+      //     } else {
+
             console.log("updated!");
             res.redirect(302, '/poems/authors');
-          }
-      });
+      //     }
+      // });
     }
   });
 });
