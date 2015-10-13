@@ -7,6 +7,8 @@ var express           = require('express'),
     expressEjsLayouts = require('express-ejs-layouts'),
     methodOverride    = require('method-override'),
     session           = require('express-session'),
+    markdownIT        = require('markdown-it'),
+    md                = new markdownIT(); 
     poemController    = require('./controllers/poems.js'),
     userController    = require('./controllers/users.js');
 
@@ -82,7 +84,7 @@ server.get('/', function(req, res){
 server.get('/home', function(req, res){
   if (req.session.currentUser) {
     // someone is logged in, so should be able to go to home page..
-    res.redirect(302, '/home/' + req.session.currentUser); 
+    res.redirect(302, '/home/' + req.session.currentUser);
   } else {
     console.log("have to log in. redirecting..");
     res.redirect(302, '/users/login');
