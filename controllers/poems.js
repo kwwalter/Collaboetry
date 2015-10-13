@@ -188,14 +188,6 @@ router.get('/tags/:tag', function(req, res){
   });
 });
 
-router.get('/poem/:id/edit', function(req, res, next){
-  res.render('poems/edit', { /* TO-DO: SPECIFIC POEM OBJECT */ })
-});
-
-router.post('/poem/:id/edit', function(req, res, next){
-  // Poem.findById()
-});
-
 router.get('/vote', function(req, res, next){
   res.render('poems/vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
 });
