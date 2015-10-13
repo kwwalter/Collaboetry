@@ -11,7 +11,7 @@
            name="poem[title]"
            value="<%= poem.title %>"><br>
     <textarea class="content markdown"
-              name="poem[content][]"><%= poem.content[0] %></textarea>
+              name="poem[content][]"><%= poem.content %></textarea>
     <div class="content preview"
         id="please-work"></div>
     <!-- <input type="text"
@@ -19,7 +19,7 @@
            placeholder="Any keywords/tags you'd like to include?"><br> -->
     <textarea readonly
            class="poem-comments">
-           Comments from <%= poem.authorName %>: <%= poem.comments[0] %></textarea><br>
+           Comments from <%= poem.authorName %>: <%= poem.comments %></textarea><br>
     <textarea class="poem-comments"
            name="poem[comments][]"
            placeholder="Any comments to add?">Comment from <%= currentUsername %>: </textarea><br>

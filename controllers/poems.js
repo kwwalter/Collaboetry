@@ -42,12 +42,16 @@ router.post('/new', function(req, res, next) {
 
   // to split up the tags input and put em in an array for easier access later..
   poemOptions.tags = poemOptions.tags[0].split(/, \s?/);
-  // poemOptions.username = thisUsername;
 
   var newPoem = Poem(poemOptions);
   newPoem.poetID = req.session.currentUser;
   newPoem.authorName = req.session.username;
   newPoem.authorEmail = req.session.email;
+
+  // trying to keep a record of all content and comments
+  newPoem.ContentHistory.push(newPoem.content);
+  newPoem.CommentsHistory.push(newPoem.comments);
+
   // newPoem._username = findUserName(req.sessio.currentUser);
   // newPoem._username = "this is a test";
 
@@ -162,8 +166,8 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res){
         currentUsername: req.session.username,
         authorID: req.params.authorID,
         poemID: req.params.poemID,
-        contentLength: foundPoem.content.length,
-        commentsLength: foundPoem.comments.length
+        // contentLength: foundPoem.content.length,
+        // commentsLength: foundPoem.comments.length
       });
     }
   });
@@ -173,6 +177,12 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res){
 
 router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
   var editedPoemParams = req.body.poem;
+  var content = editedPoemParams.content;
+  var comments = editedPoemParams.comments;
+
+  // trying to keep a record of all content and comments
+  // editedPoemParams.ContentHistory.push(editedPoemParams.content);
+  // editedPoemParams.CommentsHistory.push(editedPoemParams.comments);
 
   Poem.findOne( {
     _id: req.params.poemID
@@ -180,6 +190,10 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
     if (err) {
       console.log("could not find the poem to update!", err);
     } else {
+      // trying to keep a record of all content and comments
+      foundPoemToUpdate.ContentHistory.push(content);
+      foundPoemToUpdate.CommentsHistory.push(comments);
+
       foundPoemToUpdate.update(editedPoemParams, function(errTwo, poem){
           if (errTwo) {
             console.log("error updating your poem!", errTwo);
