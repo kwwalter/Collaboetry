@@ -159,7 +159,32 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res){
       console.log("found poem is: ", foundPoem);
       res.render('poems/edit', {
         poem: foundPoem,
-        currentUsername: req.session.username
+        currentUsername: req.session.username,
+        authorID: req.params.authorID,
+        poemID: req.params.poemID
+      });
+    }
+  });
+});
+
+// PATCH request for edit poem
+
+router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
+  var editedPoemParams = req.body.poem;
+
+  Poem.findOne( {
+    _id: req.params.poemID
+  }, function(err, foundPoemToUpdate){
+    if (err) {
+      console.log("could not find the poem to update!", err);
+    } else {
+      foundPoemToUpdate.update(editedPoemParams, function(errTwo, poem){
+          if (errTwo) {
+            console.log("error updating your poem!", errTwo);
+          } else {
+            console.log("updated!");
+            res.redirect(302, '/poems/authors');
+          }
       });
     }
   });
@@ -174,7 +199,7 @@ router.get('/tags', function(req, res, next){
 // this route will grab all poems with a specific tag
 
 router.get('/tags/:tag', function(req, res){
-  User.find( {
+  Poem.find( {
     keywordTag: tag
   }, function(err, foundPoems) {
     if (err) {
