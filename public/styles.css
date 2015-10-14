@@ -79,6 +79,14 @@ p {
   margin-left: 1.5rem;
 }
 
+.home-stuff h2, h3, h4 {
+	text-align: center;
+}
+
+.home-stuff h2 {
+	font-size: 4rem;
+}
+
 /* by author and tag pages */
 
 .poems-by-author, .poems-by-tag {
@@ -209,7 +217,7 @@ div.preview p {
 }
 
 .show-poem p {
-	font-family: 'Open Sans Condensed'; 
+	font-family: 'Open Sans Condensed';
 }
 
 .show-h {

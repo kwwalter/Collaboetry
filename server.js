@@ -53,7 +53,7 @@ server.use(methodOverride('_method'));
 // SUPER LOGGER
 
 server.use(function(req, res, next){
-  res.locals.marked = marked; 
+  res.locals.marked = marked;
   console.log("*************** [ REQ START ] ***************");
   console.log("REQ DOT BODY: \n", req.body);
   console.log("REQ DOT PARAMS: \n", req.params);
@@ -104,10 +104,14 @@ server.get('/home/:userID', function(req, res) {
     } else {
       console.log("found poems: ", foundPoems);
       //redirect to poems by this author after finding their user object in database
-      res.render('poems/specific-author', {
-        poems: foundPoems,
-        authorName: foundPoems[0].authorName
-      });
+      if (foundPoems[0]) {
+        res.render('home', {
+          poems: foundPoems,
+          authorName: foundPoems[0].authorName
+        });
+      } else {
+        res.redirect(302, '/new-user');
+      }
     }
   }).sort( {
     title: 1 })
@@ -118,9 +122,13 @@ server.get('/home/:userID', function(req, res) {
     });
 });
 
-server.get('/new-user/:id', function(req, res){
-  res.render('new-user', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
+server.get('/new-user', function(req, res) {
+  res.render('new-user');
 });
+
+// server.get('/new-user/:id', function(req, res){
+//   res.render('new-user', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
+// });
 
 // failsafe in case someone gets to where they're not supposed to be..
 
