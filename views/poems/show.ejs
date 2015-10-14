@@ -1,8 +1,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
 <div class="show-poem">
   <% var versionLength = poem.previousVersions.length - 1; %>
-  <h1><%= poem.previousVersions[versionLength].title %></h1>
-  <h2>by: <%= poem.authorName %> <a href='mailto:<%= poem.authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem.previousVersions[versionLength].title %>"'>(Contact this sucka!)</a></h2>
+  <h1 class="show-h"><%= poem.previousVersions[versionLength].title %></h1>
+  <h2 class="show-h">by: <%= poem.authorName %> <a href='mailto:<%= poem.authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem.previousVersions[versionLength].title %>"'>(Contact this sucka!)</a></h2>
   <textarea readonly
             class="show-poem-textarea"><%= poem.previousVersions[versionLength].content %></textarea>
   <% poem.commentsHistory.forEach(function(comment, i) { %>
@@ -17,4 +17,9 @@
     <p>See previous versions of this poem <a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/previous'>here</a></p>
   <% } %>
 </div>
-  <h1 class="suggest-edit"><a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/edit'>Suggest an edit to this poem?</a></h1>
+
+<h1 class="suggest-edit"><a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/edit'>Suggest an edit to this poem?</a></h1>
+
+<form id="delete-form" action='/poems/authors/<%= poem.poetID %>/<%= poem._id %>?_method=DELETE' method="post">
+      <button id="delete-button">Delete This Poem!</button>
+</form>

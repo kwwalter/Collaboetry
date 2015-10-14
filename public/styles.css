@@ -61,14 +61,14 @@ p {
 .site-header li {
   /*text-align: center;*/
   /*vertical-align: middle;*/
-  font-size: 3.25rem;
+  font-size: 2.75rem;
   list-style: none;
   display: inline-block;
   padding: 2rem .5rem;
 }
 
 .header-first {
-	margin-left: 5rem;
+	margin-left: 4rem;
 }
 
 .site-header a:hover {
@@ -79,11 +79,19 @@ p {
   margin-left: 1.5rem;
 }
 
+/* by author and tag pages */
+
 .poems-by-author, .poems-by-tag {
   width: 60%;
   margin: 0 auto;
   border: 1px solid lightcoral;
 	margin-bottom: 1rem;
+}
+
+.poems-by-H2 {
+	text-align: center;
+	font-size: 3.5rem;
+	padding-bottom: 0.5rem;
 }
 
 .poems-by-author *, .poems-by-tag * {
@@ -199,7 +207,7 @@ div.preview p {
 	font-weight: 200;
 }
 
-.show-poem h1, h2 {
+.show-h {
 	text-align: left;
 }
 
@@ -235,5 +243,7 @@ div.preview p {
 
 .suggest-edit {
   text-align: center;
-	font-size: 4rem; 
+	font-size: 4rem;
 }
+
+/* delete form / button */
