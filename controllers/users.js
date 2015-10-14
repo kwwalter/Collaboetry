@@ -1,6 +1,7 @@
 var express = require('express'),
     router  = express.Router(),
-    User    = require('../models/user.js');
+    User    = require('../models/user.js'),
+    Poem    = require('../models/poem.js');
 
 // routes for this router
 
@@ -80,7 +81,7 @@ router.post('/signout', function(req, res) {
       console.log(user.userName, " successfully saved!");
       req.session.currentUser = foundUser._id;
       req.session.username = foundUser.username;
-      req.session.email = foundUser.email; 
+      req.session.email = foundUser.email;
       res.redirect(302, '../new-user' + "/" + user._id);
     }
   });

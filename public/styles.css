@@ -204,7 +204,12 @@ div.preview p {
 	width: 75%;
 	margin: 0 auto;
 	font-family: 'Open Sans Condensed';
+	/*font-family: fantasy;*/
 	font-weight: 200;
+}
+
+.show-poem p {
+	font-family: 'Open Sans Condensed'; 
 }
 
 .show-h {
@@ -261,5 +266,5 @@ div.preview p {
 	text-align: center;
 	margin: 0 auto;
 	display: block;
-	margin-bottom: 1rem; 
+	margin-bottom: 1rem;
 }

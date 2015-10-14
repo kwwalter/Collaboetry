@@ -7,10 +7,9 @@ var express           = require('express'),
     expressEjsLayouts = require('express-ejs-layouts'),
     methodOverride    = require('method-override'),
     session           = require('express-session'),
-    markdownIT        = require('markdown-it'),
-    md                = new markdownIT(),
     marked            = require('marked'),
     poemController    = require('./controllers/poems.js'),
+    Poem              = require('./models/poem.js'),
     userController    = require('./controllers/users.js');
 
 // server setup
@@ -54,6 +53,7 @@ server.use(methodOverride('_method'));
 // SUPER LOGGER
 
 server.use(function(req, res, next){
+  res.locals.marked = marked; 
   console.log("*************** [ REQ START ] ***************");
   console.log("REQ DOT BODY: \n", req.body);
   console.log("REQ DOT PARAMS: \n", req.params);
@@ -73,9 +73,9 @@ server.use('/users', userController);
 
 server.use('/poems', poemController);
 
-server.get('/home/:id', function(req, res){
-  res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
-});
+// server.get('/home/:id', function(req, res){
+//   res.render('home', { /* TO-DO: Poem data so we can display most popular and most current poems */ });
+// });
 
 server.get('/', function(req, res){
   console.log("have to log in. redirecting..");
@@ -90,6 +90,32 @@ server.get('/home', function(req, res){
     console.log("have to log in. redirecting..");
     res.redirect(302, '/users/login');
   }
+});
+
+// user logs in and is directed to home page.. should display all of their poems
+
+server.get('/home/:userID', function(req, res) {
+  Poem.find( {
+    poetID: req.params.userID
+  }, function(err, foundPoems) {
+    if (err) {
+      console.log("Error finding poems by author with id: ", req.params.userID);
+      res.redirect('./home');
+    } else {
+      console.log("found poems: ", foundPoems);
+      //redirect to poems by this author after finding their user object in database
+      res.render('poems/specific-author', {
+        poems: foundPoems,
+        authorName: foundPoems[0].authorName
+      });
+    }
+  }).sort( {
+    title: 1 })
+    .exec(function(err2) {
+      if (err2) {
+        console.log("There was an error sorting the data by author name");
+      }
+    });
 });
 
 server.get('/new-user/:id', function(req, res){
