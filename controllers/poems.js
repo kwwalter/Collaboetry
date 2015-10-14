@@ -222,25 +222,42 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
   var poemID = req.params.poemID,
       versionID = req.params.versionID;
 
+  // Poem.findOne( { _id: poemID } )
+  //     .aggregate([
+  //     { $unwind: "$previousVersions" },
+  //     { $match: {
+  //         _id: versionID,
+  //     }}
+  //     ], function (err, foundVersion) {
+  //     if (err) {
+  //         console.log("error finding version with id ", versionID, err);
+  //     } else {
+  //       console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!:", foundVersion);
+  //       res.render('poems/show', {
+  //          poem: foundVersion
+  //       });
+  //     }
+  // });
 
 //Aggregation function
-   Poem.aggregate([
-       { $match: {
-           _id: poemID
-       }},
-       { $unwind: "$previousVersions" },
-       { $find: {
-           _id: versionID,
-       }}
-   ], function (err, result) {
-       if (err) {
-           console.log("error finding version with id ", versionID, err);
-       } else {
-         res.render('poems/show', {
-            poem: foundVersion
-         });
-       }
-   });
+  //  Poem.aggregate([
+  //      { $match: {
+  //          _id: poemID
+  //      }},
+  //      { $unwind: "$previousVersions" },
+  //      { $match: {
+  //          _id: versionID,
+  //      }}
+  //  ], function (err, foundVersion) {
+  //      if (err) {
+  //          console.log("error finding version with id ", versionID, err);
+  //      } else {
+  //        console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!:", foundVersion);
+  //        res.render('poems/show', {
+  //           poem: foundVersion
+  //        });
+  //      }
+  //  });
 
   // Poem.aggregate( {$match: { _id: poemID}})
   //     .unwind('previousVersions')
