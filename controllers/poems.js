@@ -167,9 +167,7 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res){
         poem: foundPoem,
         currentUsername: req.session.username,
         authorID: req.params.authorID,
-        poemID: req.params.poemID,
-        // contentLength: foundPoem.content.length,
-        // commentsLength: foundPoem.comments.length
+        poemID: req.params.poemID
       });
     }
   });
@@ -183,7 +181,7 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
       content = req.body.poem.content,
       comments = req.body.poem.comments,
       username = req.session.username;
-      console.log("username is :", username);
+      // console.log("username is :", username);
 
   Poem.findOneAndUpdate( {
     _id: req.params.poemID
@@ -195,6 +193,26 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
     } else {
       console.log("updated!");
       res.redirect(302, '/poems/authors');
+    }
+  });
+});
+
+// will show previous versions of a poem
+
+router.get('/authors/:authorID/:poemID/previous', function(req, res){
+  Poem.findOne( {
+    _id: req.params.poemID
+  }, function(err, foundPoem) {
+    if (err) {
+      console.log("Error finding individual poem with id: ", req.params.poemID);
+    } else {
+      console.log("found poem is: ", foundPoem);
+      res.render('poems/previous-versions', {
+        poem: foundPoem,
+        currentUsername: req.session.username,
+        authorID: req.params.authorID,
+        poemID: req.params.poemID
+      });
     }
   });
 });

@@ -6,23 +6,26 @@
 </div>
 
 <div class="poem-form">
+  <% var versionLength = poem.previousVersions.length - 1; %>
   <form action="/poems/authors/<%= authorID %>/<%= poemID %>/edit?_method=PATCH" method="post">
     <input type="text"
            name="poem[title]"
-           value="<%= poem.title %>"><br>
+           value="<%= poem.previousVersions[versionLength].title %>"><br>
     <textarea class="content markdown"
-              name="poem[content][]"><%= poem.content %></textarea>
+              name="poem[content][]"><%= poem.previousVersions[versionLength].content %></textarea>
     <div class="content preview"
         id="please-work"></div>
     <!-- <input type="text"
            name="poem[tags][]"
            placeholder="Any keywords/tags you'd like to include?"><br> -->
+    <% poem.commentsHistory.forEach(function(comment, i) { %>
     <textarea readonly
-           class="poem-comments">
-           Comments from <%= poem.authorName %>: <%= poem.comments %></textarea><br>
+              class="show-poem-comments">
+              Comments from <%= poem.commentsHistory[i].username %>: <%= comment.comments %></textarea><br>
+    <% }); %>
     <textarea class="poem-comments"
            name="poem[comments][]"
-           placeholder="Any comments to add?">Comment from <%= currentUsername %>: </textarea><br>
+           placeholder="Any comments to add?"></textarea><br>
     <input type="submit" value="Post your edit!"><br>
   </form>
 </div>

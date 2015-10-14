@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 
 var poemSchema = Schema({
   // authorName: { type: String, required: true }, // only had this in here in case someone wants to use a pen name separate from login name--but that's dumb!
+  date: { type: Date, default: Date.now },
   title: String,
   content:{ type: String, required: true },
   tags: [ String ],
@@ -10,9 +11,7 @@ var poemSchema = Schema({
   poetID: { type: Schema.ObjectId, ref: 'User' },
   authorName: String,
   authorEmail: String,
-  previousVersions: [ { title: String, content: String } ],
-  // titleHistory: [ String ],
-  // contentHistory: [ String ],
+  previousVersions: [ { title: String, content: String, date: { type: Date, default: Date.now } } ],
   commentsHistory: [ { username: String, comments: String } ]
 }, { strict: false } );
 
