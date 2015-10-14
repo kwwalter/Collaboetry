@@ -241,9 +241,25 @@ div.preview p {
 	margin-bottom: 1.5rem;
 }
 
-.suggest-edit {
-  text-align: center;
-	font-size: 4rem;
+.suggest-edit a {
+	color: black;
+}
+
+.suggest-edit a:hover {
+	text-decoration: none;
 }
 
 /* delete form / button */
+
+/*#delete-form {
+	margin: 0 auto;
+}*/
+
+#delete-button, .suggest-edit {
+	font-size: 4rem;
+	width: 50rem;
+	text-align: center;
+	margin: 0 auto;
+	display: block;
+	margin-bottom: 1rem; 
+}

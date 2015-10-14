@@ -18,3 +18,9 @@
   <% }; %>
   <p>See all versions of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/previous'>here</a></p>
 </div>
+
+<% if (poem.userEmail == currentUserEmail) { %>
+<form id="delete-form" action='/poems/authors/<%= poem.poetID %>/<%= poem._id %>?_method=DELETE' method="post">
+      <button id="delete-button">Delete This Poem, <%= poem.authorName %>!</button>
+</form>
+<% }; %>

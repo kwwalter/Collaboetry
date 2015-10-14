@@ -148,7 +148,8 @@ router.get('/authors/:authorID/:poemID', function(req, res){
     } else {
       console.log("found poem is: ", foundPoem);
       res.render('poems/show', {
-        poem: foundPoem
+        poem: foundPoem,
+        currentUser: req.session.currentUser
       });
     }
   });
@@ -235,7 +236,8 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
              versionComments: foundPoem.commentsHistory[i],
              poetID: foundPoem.poetID,
              poemID: foundPoem._id,
-             index: i
+             index: i,
+             currentUserEmail: req.session.email
            });
         }
       }
@@ -348,6 +350,26 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
   //   }
   // });
 });
+
+// Delete entire Poem (if currentUser == author)
+
+router.delete('/authors/:authorID/:poemID', function(req, res) {
+  var poemToDelete = req.params.poemID;
+
+  if (req.session.currentUser == req.params.authorID) {
+    Poem.remove({
+      _id: poemToDelete
+    }, function(err) {
+      if (err) {
+        console.log("there was an error deleting this poem: ", poemToDelete);
+      } else {
+        res.redirect(302, '/poems/authors');
+      }
+    });
+  };
+});
+
+// Delete just one version of the poem (if currentUser == author or editor)
 
 // will show all tags that have been inputted by users during poem submission
 
