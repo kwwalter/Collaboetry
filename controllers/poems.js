@@ -41,7 +41,8 @@ router.post('/new', function(req, res, next) {
       title = req.body.poem.title,
       content = req.body.poem.content,
       comments = req.body.poem.comments,
-      username = req.session.username;
+      username = req.session.username,
+      userEmail = req.session.email;
 
   // var thisUsername = findUserName(req.session.currentUser);
 
@@ -54,7 +55,7 @@ router.post('/new', function(req, res, next) {
   newPoem.authorEmail = req.session.email;
 
   // trying to keep a record of all titles, content, and comments
-  newPoem.previousVersions.push( { title, content  });
+  newPoem.previousVersions.push( { username, userEmail, title, content  });
   newPoem.commentsHistory.push( { username, comments } );
 
   // User.find( {
@@ -181,11 +182,12 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
       content = req.body.poem.content,
       comments = req.body.poem.comments,
       username = req.session.username;
+      userEmail = req.session.email;
       // console.log("username is :", username);
 
   Poem.findOneAndUpdate( {
     _id: req.params.poemID
-  }, { $push: { previousVersions: { title, content }, commentsHistory: { username, comments } }
+  }, { $push: { previousVersions: { username, userEmail, title, content }, commentsHistory: { username, comments } }
      },
      function(err, model){
     if (err) {
@@ -217,23 +219,22 @@ router.get('/authors/:authorID/:poemID/previous', function(req, res){
   });
 });
 
+// show a particular version of a single poem
+
 router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
-  // new Aggregate();
-  var poemID = req.params.poemID,
-      versionID = req.params.versionID;
-
-  // this almost works. tinker with it again tomorrow. 
-
-  Poem.findOne( { _id: poemID }, function(err, foundPoem) {
+  Poem.findOne( { _id: req.params.poemID }, function(err, foundPoem) {
   if (err) {
     console.log("error locating poem, ", err);
   } else {
       for (var i = 0; i < foundPoem.previousVersions.length; i++) {
-        if (versionID = foundPoem.previousVersions[i]._id) {
+        if (req.params.versionID == foundPoem.previousVersions[i]._id) {
           var foundVersion = foundPoem.previousVersions[i];
           console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!: ", foundVersion);
-          res.render('poems/show', {
-             poem: foundVersion
+          res.render('poems/show-previous', {
+             poem: foundVersion,
+             versionComments: foundPoem.commentsHistory[i],
+             poetID: foundPoem.poetID,
+             poemID: foundPoem._id
            });
         }
       }

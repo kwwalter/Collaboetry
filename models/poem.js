@@ -11,7 +11,7 @@ var poemSchema = Schema({
   poetID: { type: Schema.ObjectId, ref: 'User' },
   authorName: String,
   authorEmail: String,
-  previousVersions: [ { title: String, content: String, date: { type: Date, default: Date.now } } ],
+  previousVersions: [ { username: String, userEmail: String, title: String, content: String, date: { type: Date, default: Date.now } } ],
   commentsHistory: [ { username: String, comments: String } ]
 }, { strict: false } );
 

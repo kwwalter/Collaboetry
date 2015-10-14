@@ -1,0 +1,12 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
+<div class="show-poem">
+  <h1><%= poem.title %></h1>
+  <h2>Edited by: <%= poem.username %> <a href='mailto:<%= poem.userEmail %>?subject=Collaboetry: a note about the edits you made to the poem, "<%= poem.title %>"'>(Contact this sucka!)</a></h2>
+  <textarea readonly
+            class="show-poem-textarea"><%= poem.content %></textarea>
+  <textarea readonly
+            class="show-poem-comments">
+            Comments on this edit, from <%= poem.username %>: <%= versionComments %></textarea><br>
+  <p>Edit submitted by <%= poem.username %> on <%=poem.date %></p>
+  <p>See all versions of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/previous'>here</a></p>
+</div>
