@@ -6,17 +6,18 @@
   <% } else { %>
     <h2 class="show-h">Edited by: <%= version.username %> <a href='mailto:<%= version.userEmail %>?subject=Collaboetry: a note about the edits you made to the poem, "<%= version.title %>"'>(Contact this sucka!)</a></h2>
   <% }; %>
-  <textarea readonly
-            class="show-poem-textarea"><%= version.content %></textarea>
-  <textarea readonly
-            class="show-poem-comments">
-            Comments on this version, from <%= version.username %>: <%= versionComments.comments %></textarea><br>
+  <div class="show-poem-content">
+    <%- marked(version.content) %>
+  </div>
+  <div class="show-poem-comments">
+            <span class="comments-span">Comments on this version, from <%= version.username %>: </span><%= versionComments.comments %>
+  </div><br>
   <% if (index === 0) { %>
-    <p>First posted by <%= version.username %> on <%=version.date %></p>
+    <p class="show-footer">First posted by <%= version.username %> on <%=version.date %></p>
   <% } else { %>
-    <p>Edit submitted by <%= version.username %> on <%=version.date %></p>
+    <p class="show-footer">Edit submitted by <%= version.username %> on <%=version.date %></p>
   <% }; %>
-  <p>See all versions of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/previous'>here</a></p>
+  <p class="show-footer">See all versions of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/previous'>here</a></p>
 </div>
 
 <!-- <% if (version.username === currentUsername || currentUsername === authorName) { %>
