@@ -197,7 +197,7 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
   });
 });
 
-// will show previous versions of a poem
+// Show all previous versions of a specific poem
 
 router.get('/authors/:authorID/:poemID/previous', function(req, res){
   Poem.findOne( {
@@ -215,6 +215,76 @@ router.get('/authors/:authorID/:poemID/previous', function(req, res){
       });
     }
   });
+});
+
+router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
+  // new Aggregate();
+  var poemID = req.params.poemID,
+      versionID = req.params.versionID;
+
+
+//Aggregation function
+   Poem.aggregate([
+       { $match: {
+           _id: poemID
+       }},
+       { $unwind: "$previousVersions" },
+       { $find: {
+           _id: versionID,
+       }}
+   ], function (err, result) {
+       if (err) {
+           console.log("error finding version with id ", versionID, err);
+       } else {
+         res.render('poems/show', {
+            poem: foundVersion
+         });
+       }
+   });
+
+  // Poem.aggregate( {$match: { _id: poemID}})
+  //     .unwind('previousVersions')
+  //     .findOne( { _id: versionID} )
+  //     .exec(function(err, foundVersion) {
+  //       if (err) {
+  //         console.log("error finding version with id: ", versionID);
+  //       } else {
+  //         console.log("success!");
+  //         res.render('poems/show', {
+  //           poem: foundVersion
+  //         });
+  //       }
+  //     });
+
+  // Poem.findOne( {
+  //   _id: req.params.poemID
+  // }).unwind('previousVersions')
+  //   .findone( {
+  //     _id: req.params.versionID
+  //   }).exec(function(err, foundVersion){
+  //     if (err) {
+  //       console.log("error finding a version with id: ", req.params.versionID);
+  //     } else {
+  //       console.log("success!");
+  //       res.render('poems/show', {
+  //         poem: foundVersion
+  //       });
+  //     }
+  //   });
+
+  //
+  // Poem.findOne( {
+  //   previousVersions._id: req.params.versionID
+  // }, function(err, foundPoem) {
+  //   if (err) {
+  //     console.log("Error finding individual poem with id: ", req.params.poemID);
+  //   } else {
+  //     console.log("found poem is: ", foundPoem);
+  //     res.render('poems/show', {
+  //       poem: foundPoem
+  //     });
+  //   }
+  // });
 });
 
 // will show all tags that have been inputted by users during poem submission

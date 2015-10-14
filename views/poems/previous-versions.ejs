@@ -1,4 +1,4 @@
 <% poem.previousVersions.forEach(function(version, i) { %>
-  <h2><a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/version<%= i %>'>Version <%= i + 1 %>, from <%= poem.previousVersions[i].date %></a></h2>
+  <h2><a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/<%= poem.previousVersions[i]._id %>'>Version <%= i + 1 %>, from <%= poem.previousVersions[i].date %></a></h2>
   <p>(Last modified by <%= poem.commentsHistory[i].username %>)</p>
 <% }); %>
