@@ -234,7 +234,8 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
              poem: foundVersion,
              versionComments: foundPoem.commentsHistory[i],
              poetID: foundPoem.poetID,
-             poemID: foundPoem._id
+             poemID: foundPoem._id,
+             index: i
            });
         }
       }
