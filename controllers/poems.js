@@ -232,12 +232,15 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
           var foundVersion = foundPoem.previousVersions[i];
           console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!: ", foundVersion);
           res.render('poems/show-previous', {
-             poem: foundVersion,
+             version: foundVersion,
              versionComments: foundPoem.commentsHistory[i],
              poetID: foundPoem.poetID,
+             authorName: foundPoem.authorName,
              poemID: foundPoem._id,
              index: i,
-             currentUserEmail: req.session.email
+             currentUserEmail: req.session.email,
+             currentUsername: req.session.username,
+             authorEmail: foundPoem.authorEmail
            });
         }
       }
@@ -370,6 +373,37 @@ router.delete('/authors/:authorID/:poemID', function(req, res) {
 });
 
 // Delete just one version of the poem (if currentUser == author or editor)
+
+router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
+  var index;
+
+  Poem.findOne( { _id: req.params.poemID }, function(err, foundPoem) {
+  if (err) {
+    console.log("error locating poem, ", err);
+  } else {
+      for (var i = 0; i < foundPoem.previousVersions.length; i++) {
+        if (req.params.versionID == foundPoem.previousVersions[i]._id) {
+          index = i;
+          // foundPoem.previousVersions.splice(i, 1);
+        }
+      }
+    }
+  });
+
+  Poem.update(
+    { _id: req.params.poemID },
+    { $unset: { "previousVersions.index": 1 } },
+    { $pull: {"previousVersions": null } },
+    function(err) {
+      if (err) {
+        console.log("Error removing this version from the array: ", err);
+      } else {
+        console.log("version successfully removed from the array!");
+        res.redirect(302, '/poems/authors');
+      }
+    }
+  )
+});
 
 // will show all tags that have been inputted by users during poem submission
 

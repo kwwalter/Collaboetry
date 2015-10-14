@@ -1,26 +1,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
 <div class="show-poem">
-  <h1 class="show-h"><%= poem.title %></h1>
+  <h1 class="show-h"><%= version.title %></h1>
   <% if (index === 0) { %>
-    <h2 class="show-h">Original author: <%= poem.username %> <a href='mailto:<%= poem.userEmail %>?subject=Collaboetry: a note about your poem, "<%= poem.title %>"'>(Contact this sucka!)</a></h2>
+    <h2 class="show-h">Original author: <%= version.username %> <a href='mailto:<%= version.userEmail %>?subject=Collaboetry: a note about your poem, "<%= version.title %>"'>(Contact this sucka!)</a></h2>
   <% } else { %>
-    <h2 class="show-h">Edited by: <%= poem.username %> <a href='mailto:<%= poem.userEmail %>?subject=Collaboetry: a note about the edits you made to the poem, "<%= poem.title %>"'>(Contact this sucka!)</a></h2>
+    <h2 class="show-h">Edited by: <%= version.username %> <a href='mailto:<%= version.userEmail %>?subject=Collaboetry: a note about the edits you made to the poem, "<%= version.title %>"'>(Contact this sucka!)</a></h2>
   <% }; %>
   <textarea readonly
-            class="show-poem-textarea"><%= poem.content %></textarea>
+            class="show-poem-textarea"><%= version.content %></textarea>
   <textarea readonly
             class="show-poem-comments">
-            Comments on this version, from <%= poem.username %>: <%= versionComments.comments %></textarea><br>
+            Comments on this version, from <%= version.username %>: <%= versionComments.comments %></textarea><br>
   <% if (index === 0) { %>
-    <p>First posted by <%= poem.username %> on <%=poem.date %></p>
+    <p>First posted by <%= version.username %> on <%=version.date %></p>
   <% } else { %>
-    <p>Edit submitted by <%= poem.username %> on <%=poem.date %></p>
+    <p>Edit submitted by <%= version.username %> on <%=version.date %></p>
   <% }; %>
   <p>See all versions of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/previous'>here</a></p>
 </div>
 
-<% if (poem.userEmail == currentUserEmail) { %>
-<form id="delete-form" action='/poems/authors/<%= poem.poetID %>/<%= poem._id %>?_method=DELETE' method="post">
-      <button id="delete-button">Delete This Poem, <%= poem.authorName %>!</button>
+<!-- <% if (version.username === currentUsername || currentUsername === authorName) { %>
+<form id="delete-form" action='/authors/<%= poetID %>/<%= poemID %>/<%= version._id %>?_method=DELETE' method="post">
+      <button id="delete-button">Delete This Version, <%= currentUsername %>!</button>
 </form>
-<% }; %>
+<% }; %> -->
