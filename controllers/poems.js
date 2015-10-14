@@ -222,6 +222,49 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
   var poemID = req.params.poemID,
       versionID = req.params.versionID;
 
+  // this almost works. tinker with it again tomorrow. 
+
+  Poem.findOne( { _id: poemID }, function(err, foundPoem) {
+  if (err) {
+    console.log("error locating poem, ", err);
+  } else {
+      for (var i = 0; i < foundPoem.previousVersions.length; i++) {
+        if (versionID = foundPoem.previousVersions[i]._id) {
+          var foundVersion = foundPoem.previousVersions[i];
+          console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!: ", foundVersion);
+          res.render('poems/show', {
+             poem: foundVersion
+           });
+        }
+      }
+    }
+  });
+
+// latest aggregate -- no errors, but foundVersion = [];
+
+  // Poem.findOne( { _id: poemID }, function(err, foundPoem) {
+  //   if (err) {
+  //     console.log("error locating poem, ", err);
+  //   } else {
+  //       console.log("foundPoem.previousVersions: ", foundPoem.previousVersions);
+  //       Poem.aggregate([
+  //       { $unwind: "$previousVersions" },
+  //       { $match: {
+  //           _id: versionID,
+  //       }}
+  //       ], function (err, foundVersion) {
+  //       if (err) {
+  //           console.log("error finding version with id ", versionID, err);
+  //       } else {
+  //         console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!:", foundVersion);
+  //         res.render('poems/show', {
+  //            poem: foundVersion
+  //          });
+  //         }
+  //       });
+  //     }
+  //   });
+
   // Poem.findOne( { _id: poemID } )
   //     .aggregate([
   //     { $unwind: "$previousVersions" },
@@ -239,7 +282,7 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
   //     }
   // });
 
-//Aggregation function
+//Aggregation function -- no errors, but foundVersion = [];
   //  Poem.aggregate([
   //      { $match: {
   //          _id: poemID
