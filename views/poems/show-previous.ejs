@@ -18,6 +18,11 @@
     <p class="show-footer">Edit submitted by <%= version.username %> on <%=version.date %></p>
   <% }; %>
   <p class="show-footer">See all versions of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/previous'><b>here</b></a></p>
+  <% if (last) { %>
+    <button class="suggest-edit"><a href='/poems/authors/<%= poetID %>/<%= poemID %>/edit'>Edit this poem?</a></button>
+  <% } else { %>
+    <p class="show-footer">See the most recent version of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/<%= lastVersionID %>'><b>here</b></a></p>
+  <% } %>
 </div>
 
 <% if (version.username === currentUsername || currentUsername === authorName) { %>

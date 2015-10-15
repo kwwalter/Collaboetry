@@ -18,7 +18,7 @@
   <% } %>
 </div>
 
-<button class="suggest-edit"><a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/edit'>Suggest an edit to this poem?</a></button>
+<button class="suggest-edit"><a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/edit'>Edit this poem?</a></button>
 <% if (poem.poetID == currentUser) { %>
 <form id="delete-form" action='/poems/authors/<%= poem.poetID %>/<%= poem._id %>?_method=DELETE' method="post">
       <button id="delete-button">Delete This Poem, <%= poem.authorName %>!</button>

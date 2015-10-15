@@ -15,25 +15,6 @@ router.get('/new', function(req, res) {
   }
 });
 
-
-// function to find a username based on ID..
-
-// var findUserName = function() {
-//   var returnUsername = "";
-//
-//   User.find( {
-//     _id: req.session.currentUser
-//   }, function(err, user) {
-//     if (err) {
-//       console.log("There was an error finding this user in the database");
-//     } else {
-//       returnUsername = user.username;
-//     }
-//   });
-//
-//   return returnUsername;
-// };
-
 // user submits a new poem..
 
 router.post('/new', function(req, res, next) {
@@ -283,17 +264,41 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
           if (req.params.versionID == foundPoem.previousVersions[i]._id) {
             var foundVersion = foundPoem.previousVersions[i];
             console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!: ", foundVersion);
-            res.render('poems/show-previous', {
-               version: foundVersion,
-               versionComments: foundPoem.commentsHistory[i],
-               poetID: foundPoem.poetID,
-               authorName: foundPoem.authorName,
-               poemID: foundPoem._id,
-               index: i,
-               currentUserEmail: req.session.email,
-               currentUsername: req.session.username,
-               authorEmail: foundPoem.authorEmail
-             });
+            // to determine whether or not this is the last version in the array, and thus the most recent
+            var last;
+            var lastVersionID = foundPoem.previousVersions[foundPoem.previousVersions.length - 1]._id;
+
+            if (i + 1 == foundPoem.previousVersions.length) {
+              last = true;
+              res.render('poems/show-previous', {
+                 version: foundVersion,
+                 versionComments: foundPoem.commentsHistory[i],
+                 poetID: foundPoem.poetID,
+                 authorName: foundPoem.authorName,
+                 poemID: foundPoem._id,
+                 index: i,
+                 currentUserEmail: req.session.email,
+                 currentUsername: req.session.username,
+                 authorEmail: foundPoem.authorEmail,
+                 last: last,
+                 lastVersionID: lastVersionID
+               });
+             } else {
+               last = false;
+               res.render('poems/show-previous', {
+                  version: foundVersion,
+                  versionComments: foundPoem.commentsHistory[i],
+                  poetID: foundPoem.poetID,
+                  authorName: foundPoem.authorName,
+                  poemID: foundPoem._id,
+                  index: i,
+                  currentUserEmail: req.session.email,
+                  currentUsername: req.session.username,
+                  authorEmail: foundPoem.authorEmail,
+                  last: last,
+                  lastVersionID: lastVersionID
+                });
+             }
           }
         }
       }
