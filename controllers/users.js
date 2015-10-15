@@ -13,7 +13,7 @@ router.post('/signup', function(req, res) {
   var attemptedSignup = req.body.user;
   var newUser = User(req.body.user);
 
-  User.find( {
+  User.findOne( {
     username: attemptedSignup.username,
     email: attemptedSignup.email
   }, function(err, foundUser) {
