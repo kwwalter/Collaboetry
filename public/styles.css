@@ -75,14 +75,13 @@ h1 {
 
 .site-header a:hover {
   color: lightcoral;
+	transition: 0.25s
 }
 
 /* for homepage */
 
 .home-stuff {
-	margin: 0 auto;
 	margin-left: 1.5rem;
-	width: 80%;
 }
 
 .home-stuff h2, .home-stuff h3, .home-stuff h4 {
@@ -104,10 +103,10 @@ h1 {
   margin: 0 auto;
 	margin-bottom: 1rem;
 }
-
+/*
 .poems-by-author {
 	border: 1px solid lightcoral;
-}
+}*/
 
 .poems-by-H2 {
 	text-align: center;
@@ -316,24 +315,26 @@ div.preview p {
 	margin-bottom: 1rem;
 }
 
-/* for tags page */
+/* for tags page divs, and home page divs */
 
-.tag-divs {
+.tag-divs, .home-divs {
 	border: 1px solid lightcoral;
 	width: 80%;
 	margin: 0 auto;
 	margin-bottom: 1.5rem;
 }
 
-.tag-divs:hover {
+.tag-divs:hover, .home-divs:hover {
 	background-color: powderblue;
 	color: #FFFAFA;
-	transition-duration: 0.25s;
+	transition-duration: 0.2s;
+
+	transform: scaleZ(100); 
 }
 
-.tag-divs h2 a:hover {
+.tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover {
 	color: lightcoral;
-	transition-duration: 0.25s;
+	transition-duration: 0.2s;
 }
 
 .tag-divs h1 {

@@ -89,25 +89,50 @@ router.get('/new-fail', function(req, res) {
 // for a listing of all authors who have submitted poems
 
 router.get('/authors', function(req, res){
-  // grab all the poems
-  Poem.find({}, function(err, allThePoems){
-    if (err) {
-      console.log("Error retrieving all poems from database..");
-      res.end();
-    } else {
-      res.render('poems/authors', {
-        poems: allThePoems
-      });
-    }
-  }).sort( {
-      authorName: 1 })
-    .sort( {
-      title: 1 })
-    // .populate('_username')
-    .exec(function(err2) {
-      if (err2) {
-        console.log("There was an error sorting the data by author name");
+  // Poem.find({}, function(err, allThePoems){
+  //   if (err) {
+  //     console.log("Error retrieving all poems from database..");
+  //     res.end();
+  //   } else {
+  //     res.render('poems/authors', {
+  //       poems: allThePoems
+  //     });
+  //   }
+  // }).sort( {
+  //     authorName: 1 })
+  //   .sort( {
+  //     title: 1 })
+  //   // .populate('_username')
+  //   .exec(function(err2) {
+  //     if (err2) {
+  //       console.log("There was an error sorting the data by author name");
+  //     }
+  //   });
+
+    var allAuthors = [];
+
+    Poem.find({})
+    .sort( { authorName: 1 } )
+    .sort( { title: 1 } )
+    .exec(function(err, allThePoems) {
+      if (err) {
+        console.log("error locating all of the poems: ", err);
+      } else {
+        for (var i = 0; i < allThePoems.length; i++) {
+          if (allAuthors.indexOf(allThePoems[i].authorName) < 0) {
+            allAuthors.push(allThePoems[i].authorName);
+          } else {
+            continue;
+          }
+        }
       }
+
+      allAuthors.sort();
+
+      res.render('poems/authors', {
+        poems: allThePoems,
+        allAuthors: allAuthors
+      });
     });
 });
 
