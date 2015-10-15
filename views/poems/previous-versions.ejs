@@ -1,9 +1,11 @@
 <div class="previous-versions">
   <h1>Previous Versions</h1>
   <% var position = []; %>
+  <% var colors = ["powderblue", "#DEA5A4", "#FF6961", "#CB99C9", "#FFD1DC", "#F49AC2", "#779ECB", "#CFCFC4", "#77DD77", "#AEC6CF", "#FFB347", "#B19CD9", "#B39EB5", "#C23B22"]; %>
   <% poem.previousVersions.forEach(function(version, i) { %>
     <% position.push(i + 1); %>
-    <div class="version-divs" style="z-index: <%= i + 1 %>">
+    <% var randomizer = Math.floor(Math.random() * (colors.length)) + 1; %>
+    <div class="version-divs" style="background-color: <%= colors[randomizer] %>">
       <h2><a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/<%= poem.previousVersions[i]._id %>'>Version <%= i + 1 %></a></h2>
       <% if (i === 0) { %>
         <p>(<b>First posted</b> by <%= poem.previousVersions[i].username %> on <%= poem.previousVersions[i].date %>)</p>

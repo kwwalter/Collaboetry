@@ -12,7 +12,7 @@ var poemSchema = Schema({
   authorName: String,
   authorEmail: String,
   previousVersions: [ { username: String, userEmail: String, title: String, content: String, date: { type: Date, default: Date.now } } ],
-  commentsHistory: [ { username: String, comments: String } ]
+  commentsHistory: [ { username: String, comments: String, versionID: String } ]
 }, { strict: false } );
 
 var Poem = mongoose.model("Poem", poemSchema);

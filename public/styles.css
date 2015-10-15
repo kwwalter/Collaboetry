@@ -174,7 +174,7 @@ h1 {
 	font-size: 4rem;
 }
 
-/*poem submit form*/
+/*poem submit form -- for new and edit*/
 
 .poem-submit-note {
 	width: 80%;
@@ -184,7 +184,7 @@ h1 {
 }
 
 .poem-submit-note p {
-	font-size: 2.25rem;
+	font-size: 2.5rem;
 }
 
 .poem-form {
@@ -231,10 +231,11 @@ h1 {
 .markdown {
 	resize: none;
 	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 2rem;
 }
 
 .preview {
-	overflow: scroll;
+	overflow-y: scroll;
 	font-family: 'Open Sans Condensed', sans-serif;
 	text-align: left;
 }
@@ -378,7 +379,7 @@ div.preview p {
 }
 
 .version-divs {
-	border: 3px solid lightcoral;
+	border: 3px solid #FFFAFA;
 }
 
 /**[class^='version-divs'] {
@@ -406,7 +407,16 @@ div.preview p {
 	transition-duration: 0.2s;
 }*/
 
-.tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover, .author-divs h2 a:hover, .version-divs h2 a:hover {
+.version-divs h2 a {
+	color: black;
+}
+
+.version-divs h2 a:hover {
+	color: #FFFAFA;
+	transition-duration: 0.2s;
+}
+
+.tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover, .author-divs h2 a:hover {
 	color: lightcoral;
 	transition-duration: 0.2s;
 }
@@ -436,4 +446,5 @@ div.preview p {
 	font-size: 2.25rem;
 	margin-left: 2rem;
 	margin-right: 1rem;
+	color: white;
 }
