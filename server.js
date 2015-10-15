@@ -54,6 +54,8 @@ server.use(methodOverride('_method'));
 
 server.use(function(req, res, next){
   res.locals.marked = marked;
+  res.locals.userLoggedIn = req.session.username;
+
   console.log("*************** [ REQ START ] ***************");
   console.log("REQ DOT BODY: \n", req.body);
   console.log("REQ DOT PARAMS: \n", req.params);
@@ -110,7 +112,7 @@ server.get('/home/:userID', function(req, res) {
           authorName: foundPoems[0].authorName
         });
       } else {
-        res.redirect(302, '/new-user');
+        res.redirect(302, '/new-user/' + req.params.userID);
       }
     }
   }).sort( {
@@ -122,7 +124,7 @@ server.get('/home/:userID', function(req, res) {
     });
 });
 
-server.get('/new-user', function(req, res) {
+server.get('/new-user/:id', function(req, res) {
   res.render('new-user');
 });
 

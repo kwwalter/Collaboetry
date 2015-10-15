@@ -87,4 +87,9 @@ router.post('/signout', function(req, res) {
   });
 });
 
+//  MIGHT NOT NEED THIS ONE 
+// router.get('/new-user/:id', function(req, res) {
+//   res.render('users/new-user');
+// })
+
 module.exports = router;
