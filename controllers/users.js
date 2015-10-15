@@ -10,21 +10,34 @@ router.get('/signup', function(req, res) {
 });
 
 router.post('/signup', function(req, res) {
+  var attemptedSignup = req.body.user;
   var newUser = User(req.body.user);
 
-  newUser.save(function(err, user) {
+  User.find( {
+    username: attemptedSignup.username,
+    email: attemptedSignup.email
+  }, function(err, foundUser) {
     if (err) {
-      console.log("There was an error saving this user to the database: \n", err);
+      console.log("there was an error finding this user: \n", err);
+    } else if (foundUser) {
+      console.log("Someone has already signed up with that username or email");
       res.redirect(302, '/users/signup-fail');
-      res.end();
     } else {
-      console.log(user.userName, " successfully saved!");
-      req.session.currentUser = user._id;
-      req.session.username = user.username;
-      req.session.email = user.email;
-      res.redirect(302, '../new-user' + "/" + user._id);
+      newUser.save(function(err2, user) {
+        if (err2) {
+          console.log("There was an error saving this user to the database: \n", err2);
+          res.redirect(302, '/users/signup-fail');
+          res.end();
+        } else {
+          console.log(user.userName, " successfully saved!");
+          req.session.currentUser = user._id;
+          req.session.username = user.username;
+          req.session.email = user.email;
+          res.redirect(302, '../new-user' + "/" + user._id);
+        }
+      });
     }
-  });
+  })
 });
 
 router.get('/signup-fail', function(req, res) {
