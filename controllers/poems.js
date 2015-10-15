@@ -408,7 +408,35 @@ router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
 // will show all tags that have been inputted by users during poem submission
 
 router.get('/tags', function(req, res, next){
-  res.render('poems/tags', { /* TO-DO: Poem data so we can display all poems, grouped by tag */ });
+  var allTheTags = [];
+
+  Poem.find({})
+  .sort( { title: 1 } )
+  .exec(function(err, allPoems) {
+      if (err) {
+        console.log("error finding all the poems: ", err);
+      } else {
+        // console.log("allPoems: ", allPoems);
+        for (var i = 0; i < allPoems.length; i++) {
+          for (var j = 0; j < allPoems[i].tags.length; j++) {
+            if (allTheTags.indexOf(allPoems[i].tags[j]) < 0) {
+              allTheTags.push(allPoems[i].tags[j]);
+            } else {
+              continue;
+            }
+          }
+        }
+      }
+      // console.log("allTheTags: ", allTheTags);
+
+      // alphabetize the array..
+      allTheTags.sort();
+
+      res.render('poems/tags', {
+        poems: allPoems,
+        tags: allTheTags
+      });
+  });
 });
 
 // this route will grab all poems with a specific tag

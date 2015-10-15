@@ -77,11 +77,15 @@ h1 {
   color: lightcoral;
 }
 
+/* for homepage */
+
 .home-stuff {
-  margin-left: 1.5rem;
+	margin: 0 auto;
+	margin-left: 1.5rem;
+	width: 80%;
 }
 
-.home-stuff h2, h3, h4 {
+.home-stuff h2, .home-stuff h3, .home-stuff h4 {
 	text-align: center;
 }
 
@@ -89,13 +93,20 @@ h1 {
 	font-size: 4rem;
 }
 
+.home-stuff h3 {
+	font-size: 3rem;
+}
+
 /* by author and tag pages */
 
 .poems-by-author, .poems-by-tag {
   width: 60%;
   margin: 0 auto;
-  border: 1px solid lightcoral;
 	margin-bottom: 1rem;
+}
+
+.poems-by-author {
+	border: 1px solid lightcoral;
 }
 
 .poems-by-H2 {
@@ -129,10 +140,14 @@ h1 {
 /*poem submit form*/
 
 .poem-submit-note {
-	width: 90%;
+	width: 80%;
 	margin: 2rem auto;
-	border: 2px solid steelblue;
+	border: 1px solid lightcoral;
 	padding: 1rem;
+}
+
+.poem-submit-note p {
+	font-size: 2.25rem;
 }
 
 .poem-form {
@@ -162,7 +177,8 @@ h1 {
 	display: inherit;
 	width: 25%;
 	font-size: 3.5rem;
-	margin: 0.5rem auto;
+	margin: 0 auto;
+	margin-top: 1rem;
 }
 
 .content {
@@ -190,8 +206,6 @@ div.preview h1, h2, h3 {
 	text-align: left;
 }
 
-/* These header sizes aren't working */
-
 div.preview h1 {
 	font-size: 6rem;
 }
@@ -201,22 +215,28 @@ div.preview h2 {
 }
 
 div.preview h3 {
-	font-size: 2rem;
+	font-size: 3rem;
 }
 
 div.preview p {
 	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 2rem;
 }
 
 .go-back {
 	width: 40%;
 	font-size: 3rem;
 	margin: 2rem auto;
-	border: 2px solid steelblue;
+	margin-top: 0;
+	border: 1px solid lightcoral;
 	text-align: center;
 }
 
 .go-back h2 {
+	margin-top: 0.75rem;
+}
+
+.go-back h2, .go-back h3 {
 	text-align: center;
 }
 
@@ -269,7 +289,7 @@ div.preview p {
 
 .show-footer {
 	font-family: AmaticStd, serif, fantasy;
-	font-size: 2rem; 
+	font-size: 2rem;
 }
 
 .comments-span {
@@ -287,10 +307,6 @@ div.preview p {
 
 /* delete form / button */
 
-/*#delete-form {
-	margin: 0 auto;
-}*/
-
 #delete-button, .suggest-edit {
 	font-size: 4rem;
 	width: 50rem;
@@ -298,4 +314,45 @@ div.preview p {
 	margin: 0 auto;
 	display: block;
 	margin-bottom: 1rem;
+}
+
+/* for tags page */
+
+.tag-divs {
+	border: 1px solid lightcoral;
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 1.5rem;
+}
+
+.tag-divs:hover {
+	background-color: powderblue;
+	color: #FFFAFA;
+	transition-duration: 0.25s;
+}
+
+.tag-divs h2 a:hover {
+	color: lightcoral;
+	transition-duration: 0.25s;
+}
+
+.tag-divs h1 {
+	font-size: 6rem;
+  letter-spacing: 10px;
+}
+
+.tag-divs h2 {
+	font-size: 4rem;
+	margin-left: 2rem;
+	margin-bottom: 0;
+}
+
+.tag-divs h3 {
+	font-size: 3rem;
+	margin-left: 3rem;
+	margin-top: 0;
+}
+
+.tag-divs h3:last-child {
+	margin-bottom: 3rem;
 }

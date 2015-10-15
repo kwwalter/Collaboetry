@@ -1,8 +1,18 @@
 <h1 class="poems-by-H1">All poems grouped by tags</h1>
 <div class="poems-by-tag">
-  poems.forEach(function(poem) {
-  <h2>tag #1</h2>
-  <h3>poem #1</h3>
-  <h3>poem #2, etc.</h3>
-}
+<% tags.forEach(function(tag, i) { %>
+  <div class="tag-divs">
+    <h1><%= tag || "[UNTAGGED]" %></h1>
+    <% poems.forEach(function(poem) { %>
+      <% for (var j = 0; j < poem.tags.length; j++) { %>
+        <% if (poem.tags[j] == tag) { %>
+          <h2><a href="/poems/authors/<%= poem.poetID %>/<%= poem._id %>"><%= poem.title || "untitled" %></a></h2>
+          <h3>&#8212; <%= poem.authorName %></h3>
+        <% } else { %>
+          <% continue;  %>
+        <% } %>
+      <% } %>
+    <% }); %>
+  </div>
+<% }); %>
 </div>
