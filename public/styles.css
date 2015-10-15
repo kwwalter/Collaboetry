@@ -363,25 +363,34 @@ div.preview p {
 	margin-bottom: 1.5rem;
 }
 
-*[class^='version-divs'] {
+.version-divs {
+	border: 3px solid lightcoral; 
+}
+
+/**[class^='version-divs'] {
 	border: 1px solid lightcoral;
 	width: 80%;
 	margin: 0 auto;
 	margin-bottom: 1.5rem;
-}
+}*/
 
-.tag-divs:hover, .home-divs:hover, .author-divs:hover, .version-divs:hover {
+.tag-divs:hover, .home-divs:hover, .author-divs:hover {
 	background-color: powderblue;
 	color: #FFFAFA;
 	transition-duration: 0.2s;
 	/*transform: scaleZ(100);*/
 }
 
-*[class^='version-div']:hover {
+/**[class^='version-div']:hover {
 	background-color: powderblue;
 	color: #FFFAFA;
 	transition-duration: 0.2s;
-}
+}*/
+
+/**[class^='version-div'] h2 a:hover {
+	color: lightcoral;
+	transition-duration: 0.2s;
+}*/
 
 .tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover, .author-divs h2 a:hover, .version-divs h2 a:hover {
 	color: lightcoral;
@@ -412,4 +421,5 @@ div.preview p {
 .version-divs p {
 	font-size: 2.25rem;
 	margin-left: 2rem;
+	margin-right: 1rem;
 }
