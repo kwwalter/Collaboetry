@@ -31,7 +31,8 @@
 body {
   font-family: AmaticStd, serif, fantasy;
   background: LightGoldenrodYellow;
-  height: 100%;
+	/*width: 100%;*/
+  /*height: 100%;*/
 }
 
 h1 {
@@ -140,24 +141,36 @@ h1 {
 
 /*login & signup forms*/
 
-.login-signup {
-	margin: 0 auto;
+.login-H {
+	margin-bottom: 4rem;
 }
 
 .login-signup-form {
-	padding-left: 1.5rem;
+	width: 40%;
+	margin: 0 auto;
+	text-align: center;
+	border: 3px solid powderblue;
+	border-radius: 20px;
+	margin-bottom: 2rem;
+	padding: 1rem;
+	/*width: 0%;*/
 }
 
 .login-signup-form input {
-	width: 20%;
+	width: 40%;
 	font-size: 2.5rem;
 	margin: 0.5rem;
 }
 
 .login-signup-form input[type="submit"] {
-	width: 10%;
+	width: 20%;
 	text-align: center;
-	margin-left: 5%;
+	/*margin-left: 5%;*/
+}
+
+.signup-fail-H2 {
+	text-align: center;
+	font-size: 4rem;
 }
 
 /*poem submit form*/
@@ -225,7 +238,7 @@ h1 {
 	text-align: left;
 }
 
-div.preview h1, h2, h3 {
+div.preview h1, div.preview h2, div.preview h3 {
 	text-align: left;
 }
 
@@ -364,7 +377,7 @@ div.preview p {
 }
 
 .version-divs {
-	border: 3px solid lightcoral; 
+	border: 3px solid lightcoral;
 }
 
 /**[class^='version-divs'] {
