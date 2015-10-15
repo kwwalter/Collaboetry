@@ -427,37 +427,23 @@ router.delete('/authors/:authorID/:poemID', function(req, res) {
   };
 });
 
-// Delete just one version of the poem (if currentUser == author or version editor)
+// Delete just one version of the poem (if currentUser == author or version editor -- that's the only way the button can appear)
 
 router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
-  var index;
-
-  Poem.findOne( { _id: req.params.poemID }, function(err, foundPoem) {
-  if (err) {
-    console.log("error locating poem, ", err);
-  } else {
-      for (var i = 0; i < foundPoem.previousVersions.length; i++) {
-        if (req.params.versionID == foundPoem.previousVersions[i]._id) {
-          index = i;
-          // foundPoem.previousVersions.splice(i, 1);
-        }
-      }
-    }
-  });
+  var poemID = req.params.poemID,
+      versionToDelete = req.params.versionID;
 
   Poem.update(
-    { _id: req.params.poemID },
-    { $unset: { "previousVersions.index": 1 } },
-    { $pull: {"previousVersions": null } },
-    function(err) {
+    {'_id': poemID },
+    { $pull: { "previousVersions" : { _id: versionToDelete } } },
+    function(err, model) {
       if (err) {
-        console.log("Error removing this version from the array: ", err);
+        console.log(err);
       } else {
-        console.log("version successfully removed from the array!");
-        res.redirect(302, '/poems/authors');
+        res.redirect(302, '/poems/authors/' + req.params.authorID + '/' + poemID + '/previous');
       }
     }
-  )
+  );
 });
 
 // will show all tags that have been inputted by users during poem submission

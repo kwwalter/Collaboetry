@@ -20,8 +20,8 @@
   <p class="show-footer">See all versions of this poem <a href='/poems/authors/<%= poetID %>/<%= poemID %>/previous'><b>here</b></a></p>
 </div>
 
-<!-- <% if (version.username === currentUsername || currentUsername === authorName) { %>
-<form id="delete-form" action='/authors/<%= poetID %>/<%= poemID %>/<%= version._id %>?_method=DELETE' method="post">
+<% if (version.username === currentUsername || currentUsername === authorName) { %>
+<form id="delete-form" action='/poems/authors/<%= poetID %>/<%= poemID %>/<%= version._id %>?_method=DELETE' method="post">
       <button id="delete-button">Delete This Version, <%= currentUsername %>!</button>
 </form>
-<% }; %> -->
+<% }; %>
