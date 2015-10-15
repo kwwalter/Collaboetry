@@ -131,7 +131,7 @@ router.get('/authors', function(req, res){
 
       res.render('poems/authors', {
         poems: allThePoems,
-        allAuthors: allAuthors
+        authors: allAuthors
       });
     });
 });
