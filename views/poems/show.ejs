@@ -1,7 +1,7 @@
 <div class="show-poem">
   <% var versionLength = poem.previousVersions.length - 1; %>
   <h1 class="show-h"><%= poem.previousVersions[versionLength].title %></h1>
-  <h2 class="show-h">by: <%= poem.authorName %> <a href='mailto:<%= poem.authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem.previousVersions[versionLength].title %>"'>(Contact this sucka!)</a></h2>
+  <h2 class="show-h">&#8212; <%= poem.authorName %> <a href='mailto:<%= poem.authorEmail %>?subject=Collaboetry: a note about your poem, "<%= poem.previousVersions[versionLength].title %>"'><b>(Contact this sucka!)</b></a></h2>
   <div class="show-poem-content">
     <%- marked(poem.previousVersions[versionLength].content) %>
   </div>
@@ -14,7 +14,7 @@
     <p class="show-footer">First posted to Collaboetry by <%= poem.authorName %> at <%= poem.date %></p>
   <% } else { %>
     <p class="show-footer">Last modified by <%= poem.commentsHistory[versionLength].username %> on <%=poem.date %></p>
-    <p class="show-footer">See previous versions of this poem <a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/previous'>here</a></p>
+    <p class="show-footer">See previous versions of this poem <a href='/poems/authors/<%= poem.poetID %>/<%= poem._id %>/previous'><b>here</b></a></p>
   <% } %>
 </div>
 

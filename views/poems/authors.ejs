@@ -1,27 +1,17 @@
 <h1 class="poems-by-H1">All of our Authors</h1>
 <h2 class="poems-by-H2">(and their poems)</h2>
 
-<!-- <% poems.forEach(function(poem){ %>
-  <div class="poems-by-author">
-    <h2><%= poem.authorName %></h2>
-    <h2><a href="/poems/authors/<%= poem.poetID %>/<%= poem._id %>"><%= poem.title || "untitled" %></a></h2>
-  </div>
-<% }); %> -->
-
 <div class="poems-by-author">
 <% authors.forEach(function(author, i) { %>
   <div class="author-divs">
     <h1><%= author %></h1>
-    <% poems.forEach(function(poem) { %>
-      <% for (var j = 0; j < poem.length; j++) { %>
-        <% if (poem.authorName == author) { %>
-          <h2><a href="/poems/authors/<%= poem.poetID %>/<%= poem._id %>"><%= poem.title || "untitled" %></a></h2>
-          <!-- <h3>&#8212; <%= poem.authorName %></h3> -->
+      <% for (var j = 0; j < poems.length; j++) { %>
+        <% if (poems[j].authorName == author) { %>
+          <h2><a href="/poems/authors/<%= poems[j].poetID %>/<%= poems[j]._id %>"><%= poems[j].title || "untitled" %></a></h2>
         <% } else { %>
           <% continue;  %>
         <% } %>
       <% } %>
-    <% }); %>
   </div>
 <% }); %>
 </div>

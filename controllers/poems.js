@@ -129,6 +129,8 @@ router.get('/authors', function(req, res){
 
       allAuthors.sort();
 
+      console.log("allThePoems", allThePoems);
+
       res.render('poems/authors', {
         poems: allThePoems,
         authors: allAuthors

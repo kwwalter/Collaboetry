@@ -13,16 +13,17 @@
            value="<%= poem.previousVersions[versionLength].title %>"><br>
     <textarea class="content markdown"
               name="poem[content][]"><%= poem.previousVersions[versionLength].content %></textarea>
-    <div class="content preview"
-        id="please-work"></div>
+    <div class="content preview"></div>
     <!-- <input type="text"
            name="poem[tags][]"
            placeholder="Any keywords/tags you'd like to include?"><br> -->
+    <div>
     <% poem.commentsHistory.forEach(function(comment, i) { %>
-    <textarea readonly
-              class="show-poem-comments">
-              Comments from <%= poem.commentsHistory[i].username %>: <%= comment.comments %></textarea><br>
+      <div class="show-poem-comments">
+        Comments from <%= poem.commentsHistory[i].username %>: <%= comment.comments %>
+      </div><br>
     <% }); %>
+    </div>
     <textarea class="poem-comments"
            name="poem[comments][]"
            placeholder="Any comments to add?"></textarea><br>
@@ -31,5 +32,5 @@
 </div>
 <div class="go-back">
   <h2>Change your mind?</h2>
-  <h3>Click <a href="/poems/authors">here</a> to go find something else to critique</h3>
+  <h3>Go <a href="/poems/authors"><b>here</b></a> and find something else to critique..</h3>
 </div>

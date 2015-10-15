@@ -108,6 +108,10 @@ h1 {
 	border: 1px solid lightcoral;
 }*/
 
+.poems-by-H1 {
+	margin-bottom: 2.5rem;
+}
+
 .poems-by-H2 {
 	text-align: center;
 	font-size: 3.5rem;
@@ -247,7 +251,7 @@ div.preview p {
 	font-weight: 200;
 }
 
-.show-poem p, .show-h, .show-poem-content, .show-poem-comments {
+.show-h, .show-poem-content, .show-poem-comments {
 	font-family: 'Open Sans Condensed', sans-serif;
 }
 
@@ -265,6 +269,7 @@ div.preview p {
 }
 
 .show-poem-content {
+	text-align: left;
 	font-size: 2rem;
 	width: 100%;
 	/*height: 400px;*/
@@ -276,8 +281,9 @@ div.preview p {
 }
 
 .show-poem-comments {
+	margin-top: 1rem;
 	padding: 1rem;
-	height: 10rem;
+	/*height: 10rem;*/
 	width: 50%;
 	font-size: 2rem;
 	background-color: #FFFAFA;
@@ -286,9 +292,17 @@ div.preview p {
 	border-top-left-radius: 0px;
 }
 
+.show-poem-comments:first-child {
+	margin-top: 42rem;
+}
+
 .show-footer {
 	font-family: AmaticStd, serif, fantasy;
-	font-size: 2rem;
+	font-size: 3rem;
+}
+
+.show-footer a {
+	font-size: 3rem;
 }
 
 .comments-span {
@@ -315,34 +329,34 @@ div.preview p {
 	margin-bottom: 1rem;
 }
 
-/* for tags page divs, and home page divs */
+/* for tags page divs, home page divs, and author page divs */
 
-.tag-divs, .home-divs {
+.tag-divs, .home-divs, .author-divs {
 	border: 1px solid lightcoral;
 	width: 80%;
 	margin: 0 auto;
 	margin-bottom: 1.5rem;
 }
 
-.tag-divs:hover, .home-divs:hover {
+.tag-divs:hover, .home-divs:hover, .author-divs:hover {
 	background-color: powderblue;
 	color: #FFFAFA;
 	transition-duration: 0.2s;
 
-	transform: scaleZ(100); 
+	transform: scaleZ(100);
 }
 
-.tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover {
+.tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover, .author-divs h2 a:hover {
 	color: lightcoral;
 	transition-duration: 0.2s;
 }
 
-.tag-divs h1 {
+.tag-divs h1, .author-divs h1 {
 	font-size: 6rem;
   letter-spacing: 10px;
 }
 
-.tag-divs h2 {
+.tag-divs h2, .author-divs h2 {
 	font-size: 4rem;
 	margin-left: 2rem;
 	margin-bottom: 0;
@@ -354,6 +368,6 @@ div.preview p {
 	margin-top: 0;
 }
 
-.tag-divs h3:last-child {
+.tag-divs h3:last-child, .author-divs h2:last-child {
 	margin-bottom: 3rem;
 }
