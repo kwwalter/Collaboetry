@@ -98,15 +98,15 @@ h1 {
 
 /* by author and tag pages */
 
-.poems-by-author, .poems-by-tag {
+.poems-by-author, .poems-by-tag, .previous-versions {
   width: 60%;
   margin: 0 auto;
 	margin-bottom: 1rem;
 }
-/*
-.poems-by-author {
-	border: 1px solid lightcoral;
-}*/
+
+.previous-versions h1 {
+	margin-bottom: 3rem;
+}
 
 .poems-by-H1 {
 	margin-bottom: 2.5rem;
@@ -123,6 +123,10 @@ h1 {
 }
 
 /*login & signup forms*/
+
+.login-signup {
+	margin: 0 auto;
+}
 
 .login-signup-form {
 	padding-left: 1.5rem;
@@ -259,14 +263,19 @@ div.preview p {
 	text-align: left;
 }
 
+.show-h a {
+	font-weight: bold;
+	font-size: 3rem;
+}
+
 .show-poem h2 {
 	padding-left: 1rem;
 	padding-bottom: 1rem;
 }
-
+/*
 .show-poem a {
 	font-size: 2rem;
-}
+}*/
 
 .show-poem-content {
 	text-align: left;
@@ -331,32 +340,44 @@ div.preview p {
 
 /* for tags page divs, home page divs, and author page divs */
 
-.tag-divs, .home-divs, .author-divs {
+.tag-divs, .home-divs, .author-divs, .version-divs {
 	border: 1px solid lightcoral;
 	width: 80%;
 	margin: 0 auto;
 	margin-bottom: 1.5rem;
 }
 
-.tag-divs:hover, .home-divs:hover, .author-divs:hover {
+*[class^='version-divs'] {
+	border: 1px solid lightcoral;
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 1.5rem;
+}
+
+.tag-divs:hover, .home-divs:hover, .author-divs:hover, .version-divs:hover {
 	background-color: powderblue;
 	color: #FFFAFA;
 	transition-duration: 0.2s;
-
-	transform: scaleZ(100);
+	/*transform: scaleZ(100);*/
 }
 
-.tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover, .author-divs h2 a:hover {
+*[class^='version-div']:hover {
+	background-color: powderblue;
+	color: #FFFAFA;
+	transition-duration: 0.2s;
+}
+
+.tag-divs h2 a:hover, .home-divs h2 a:hover, .home-divs h3 a:hover, .author-divs h2 a:hover, .version-divs h2 a:hover {
 	color: lightcoral;
 	transition-duration: 0.2s;
 }
 
-.tag-divs h1, .author-divs h1 {
+.tag-divs h1, .author-divs h1, .version-divs h1 {
 	font-size: 6rem;
   letter-spacing: 10px;
 }
 
-.tag-divs h2, .author-divs h2 {
+.tag-divs h2, .author-divs h2, .version-divs h2 {
 	font-size: 4rem;
 	margin-left: 2rem;
 	margin-bottom: 0;
@@ -370,4 +391,9 @@ div.preview p {
 
 .tag-divs h3:last-child, .author-divs h2:last-child {
 	margin-bottom: 3rem;
+}
+
+.version-divs p {
+	font-size: 2.25rem;
+	margin-left: 2rem;
 }
