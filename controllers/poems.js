@@ -8,10 +8,10 @@ var express = require('express'),
 // if user wants to post a new poem..
 
 router.get('/new', function(req, res) {
-  if (req.session.currentUser) {
+  if (res.locals.userLoggedIn) {
     res.render('poems/new');
   } else {
-    res.redirect(302, '../users/login');
+    res.redirect(302, '/');
   }
 });
 
@@ -83,7 +83,11 @@ router.post('/new', function(req, res, next) {
 // user gets an error posting poem..
 
 router.get('/new-fail', function(req, res) {
-  res.render('poems/new-fail');
+  if (res.locals.userLoggedIn) {
+    res.render('poems/new-fail');
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 // for a listing of all authors who have submitted poems
@@ -109,6 +113,7 @@ router.get('/authors', function(req, res){
   //     }
   //   });
 
+  if (res.locals.userLoggedIn) {
     var allAuthors = [];
 
     Poem.find({})
@@ -136,70 +141,85 @@ router.get('/authors', function(req, res){
         authors: allAuthors
       });
     });
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 // this route will grab all poems by a specific author
 
 router.get('/authors/:id', function(req, res) {
-  Poem.find( {
-    poetID: req.params.id
-  }, function(err, foundPoems) {
-    if (err) {
-      console.log("Error finding poems by author with id: ", req.params.id);
-      res.redirect('./home');
-    } else {
-      //redirect to poems by this author after finding their user object in database
-      res.render('poems/specific-author', {
-        poems: foundPoems,
-        authorName: foundPoems[0].authorName
-      });
-    }
-  }).sort( {
-    title: 1 })
-    // .populate('_username')
-    .exec(function(err2) {
-      if (err2) {
-        console.log("There was an error sorting the data by author name");
+  if (res.locals.userLoggedIn) {
+    Poem.find( {
+      poetID: req.params.id
+    }, function(err, foundPoems) {
+      if (err) {
+        console.log("Error finding poems by author with id: ", req.params.id);
+        res.redirect('./home');
+      } else {
+        //redirect to poems by this author after finding their user object in database
+        res.render('poems/specific-author', {
+          poems: foundPoems,
+          authorName: foundPoems[0].authorName
+        });
       }
-    });
+    }).sort( {
+      title: 1 })
+      // .populate('_username')
+      .exec(function(err2) {
+        if (err2) {
+          console.log("There was an error sorting the data by author name");
+        }
+      });
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 // show one individual poem
 
-router.get('/authors/:authorID/:poemID', function(req, res){
-  Poem.findOne( {
-    _id: req.params.poemID
-  }, function(err, foundPoem) {
-    if (err) {
-      console.log("Error finding individual poem with id: ", req.params.poemID);
-    } else {
-      console.log("found poem is: ", foundPoem);
-      res.render('poems/show', {
-        poem: foundPoem,
-        currentUser: req.session.currentUser
-      });
-    }
-  });
+router.get('/authors/:authorID/:poemID', function(req, res) {
+  if (res.locals.userLoggedIn) {
+    Poem.findOne( {
+      _id: req.params.poemID
+    }, function(err, foundPoem) {
+      if (err) {
+        console.log("Error finding individual poem with id: ", req.params.poemID);
+      } else {
+        console.log("found poem is: ", foundPoem);
+        res.render('poems/show', {
+          poem: foundPoem,
+          currentUser: req.session.currentUser
+        });
+      }
+    });
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 // edit that one individual poem
 
-router.get('/authors/:authorID/:poemID/edit', function(req, res){
-  Poem.findOne( {
-    _id: req.params.poemID
-  }, function(err, foundPoem) {
-    if (err) {
-      console.log("Error finding individual poem with id: ", req.params.poemID);
-    } else {
-      console.log("found poem is: ", foundPoem);
-      res.render('poems/edit', {
-        poem: foundPoem,
-        currentUsername: req.session.username,
-        authorID: req.params.authorID,
-        poemID: req.params.poemID
-      });
-    }
-  });
+router.get('/authors/:authorID/:poemID/edit', function(req, res) {
+  if (res.locals.userLoggedIn) {
+    Poem.findOne( {
+      _id: req.params.poemID
+    }, function(err, foundPoem) {
+      if (err) {
+        console.log("Error finding individual poem with id: ", req.params.poemID);
+      } else {
+        console.log("found poem is: ", foundPoem);
+        res.render('poems/edit', {
+          poem: foundPoem,
+          currentUsername: req.session.username,
+          authorID: req.params.authorID,
+          poemID: req.params.poemID
+        });
+      }
+    });
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 // PATCH request for edit poem
@@ -230,49 +250,57 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
 // Show all previous versions of a specific poem
 
 router.get('/authors/:authorID/:poemID/previous', function(req, res){
-  Poem.findOne( {
-    _id: req.params.poemID
-  }, function(err, foundPoem) {
-    if (err) {
-      console.log("Error finding individual poem with id: ", req.params.poemID);
-    } else {
-      console.log("found poem is: ", foundPoem);
-      res.render('poems/previous-versions', {
-        poem: foundPoem,
-        currentUsername: req.session.username,
-        authorID: req.params.authorID,
-        poemID: req.params.poemID
-      });
-    }
-  });
+  if (res.locals.userLoggedIn) {
+    Poem.findOne( {
+      _id: req.params.poemID
+    }, function(err, foundPoem) {
+      if (err) {
+        console.log("Error finding individual poem with id: ", req.params.poemID);
+      } else {
+        console.log("found poem is: ", foundPoem);
+        res.render('poems/previous-versions', {
+          poem: foundPoem,
+          currentUsername: req.session.username,
+          authorID: req.params.authorID,
+          poemID: req.params.poemID
+        });
+      }
+    });
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 // show a particular version of a single poem
 
 router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
-  Poem.findOne( { _id: req.params.poemID }, function(err, foundPoem) {
-  if (err) {
-    console.log("error locating poem, ", err);
-  } else {
-      for (var i = 0; i < foundPoem.previousVersions.length; i++) {
-        if (req.params.versionID == foundPoem.previousVersions[i]._id) {
-          var foundVersion = foundPoem.previousVersions[i];
-          console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!: ", foundVersion);
-          res.render('poems/show-previous', {
-             version: foundVersion,
-             versionComments: foundPoem.commentsHistory[i],
-             poetID: foundPoem.poetID,
-             authorName: foundPoem.authorName,
-             poemID: foundPoem._id,
-             index: i,
-             currentUserEmail: req.session.email,
-             currentUsername: req.session.username,
-             authorEmail: foundPoem.authorEmail
-           });
+  if (res.locals.userLoggedIn) {
+    Poem.findOne( { _id: req.params.poemID }, function(err, foundPoem) {
+    if (err) {
+      console.log("error locating poem, ", err);
+    } else {
+        for (var i = 0; i < foundPoem.previousVersions.length; i++) {
+          if (req.params.versionID == foundPoem.previousVersions[i]._id) {
+            var foundVersion = foundPoem.previousVersions[i];
+            console.log("!!!!!!!!!!!!SUCCCESSS!!!!!!!!!: ", foundVersion);
+            res.render('poems/show-previous', {
+               version: foundVersion,
+               versionComments: foundPoem.commentsHistory[i],
+               poetID: foundPoem.poetID,
+               authorName: foundPoem.authorName,
+               poemID: foundPoem._id,
+               index: i,
+               currentUserEmail: req.session.email,
+               currentUsername: req.session.username,
+               authorEmail: foundPoem.authorEmail
+             });
+          }
         }
       }
-    }
-  });
+    });
+  } else {
+    res.redirect(302, '/');
+  }
 
 // latest aggregate -- no errors, but foundVersion = [];
 
@@ -399,7 +427,7 @@ router.delete('/authors/:authorID/:poemID', function(req, res) {
   };
 });
 
-// Delete just one version of the poem (if currentUser == author or editor)
+// Delete just one version of the poem (if currentUser == author or version editor)
 
 router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
   var index;
@@ -434,58 +462,68 @@ router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
 
 // will show all tags that have been inputted by users during poem submission
 
-router.get('/tags', function(req, res, next){
-  var allTheTags = [];
+router.get('/tags', function(req, res, next) {
+  if (res.locals.userLoggedIn) {
+    var allTheTags = [];
 
-  Poem.find({})
-  .sort( { title: 1 } )
-  .exec(function(err, allPoems) {
-      if (err) {
-        console.log("error finding all the poems: ", err);
-      } else {
-        // console.log("allPoems: ", allPoems);
-        for (var i = 0; i < allPoems.length; i++) {
-          for (var j = 0; j < allPoems[i].tags.length; j++) {
-            if (allTheTags.indexOf(allPoems[i].tags[j]) < 0) {
-              allTheTags.push(allPoems[i].tags[j]);
-            } else {
-              continue;
+    Poem.find({})
+    .sort( { title: 1 } )
+    .exec(function(err, allPoems) {
+        if (err) {
+          console.log("error finding all the poems: ", err);
+        } else {
+          // console.log("allPoems: ", allPoems);
+          for (var i = 0; i < allPoems.length; i++) {
+            for (var j = 0; j < allPoems[i].tags.length; j++) {
+              if (allTheTags.indexOf(allPoems[i].tags[j]) < 0) {
+                allTheTags.push(allPoems[i].tags[j]);
+              } else {
+                continue;
+              }
             }
           }
         }
-      }
-      // console.log("allTheTags: ", allTheTags);
+        // console.log("allTheTags: ", allTheTags);
 
-      // alphabetize the array..
-      allTheTags.sort();
+        // alphabetize the array..
+        allTheTags.sort();
 
-      res.render('poems/tags', {
-        poems: allPoems,
-        tags: allTheTags
-      });
-  });
+        res.render('poems/tags', {
+          poems: allPoems,
+          tags: allTheTags
+        });
+    });
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 // this route will grab all poems with a specific tag
+// PROBABLY NOT GOING TO USE THIS AFTER ALL
+//
+// router.get('/tags/:tag', function(req, res){
+//   Poem.find( {
+//     keywordTag: tag
+//   }, function(err, foundPoems) {
+//     if (err) {
+//       console.log("Error finding poems with tag: ", req.params.tag);
+//       res.redirect('./home');
+//     } else {
+//       //redirect to poems that have this tag
+//       res.render('poems/tags', {
+//         poems: foundPoems,
+//       });
+//     }
+//   });
+// });
 
-router.get('/tags/:tag', function(req, res){
-  Poem.find( {
-    keywordTag: tag
-  }, function(err, foundPoems) {
-    if (err) {
-      console.log("Error finding poems with tag: ", req.params.tag);
-      res.redirect('./home');
-    } else {
-      //redirect to poems that have this tag
-      res.render('poems/tags', {
-        poems: foundPoems,
-      });
-    }
-  });
-});
-
-router.get('/vote', function(req, res, next){
-  res.render('poems/vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
+// Probably won't have time for this..
+router.get('/vote', function(req, res, next) {
+  if (res.locals.userLoggedIn) {
+    res.render('poems/vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
+  } else {
+    res.redirect(302, '/');
+  }
 });
 
 module.exports = router;

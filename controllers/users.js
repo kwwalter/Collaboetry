@@ -66,7 +66,12 @@ router.get('/signout', function(req, res) {
   req.session.currentUser = null;
   req.session.username = null;
   req.session.email = null;
-  res.render('users/signout');
+
+  userLoggedIn = null;
+
+  // res.render('users/signout');
+
+  res.redirect(302, '/users/login');
 });
 
 router.post('/signout', function(req, res) {
@@ -86,10 +91,5 @@ router.post('/signout', function(req, res) {
     }
   });
 });
-
-//  MIGHT NOT NEED THIS ONE 
-// router.get('/new-user/:id', function(req, res) {
-//   res.render('users/new-user');
-// })
 
 module.exports = router;
