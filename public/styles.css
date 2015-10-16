@@ -65,7 +65,7 @@ h1 {
   margin: 1rem auto;
   padding-bottom: 3rem;
   font-family: AmaticBold, serif, fantasy;
-  letter-spacing: 6px;
+  letter-spacing: 5px;
 }
 
 .site-header ul {
@@ -76,7 +76,7 @@ h1 {
 .site-header li {
   /*text-align: center;*/
   /*vertical-align: middle;*/
-  font-size: 2.75rem;
+  font-size: 3.5rem;
   list-style: none;
   display: inline-block;
   padding: 2rem .5rem;
@@ -154,7 +154,6 @@ h1 {
 	margin-bottom: 2rem;
 	padding: 3rem;
 	background-color: #FFFAFA;
-	/*width: 0%;*/
 }
 
 .login-signup-form input {
@@ -202,8 +201,9 @@ h1 {
 }
 
 .poem-comments {
-	height: 10rem;
 	width: 80%;
+  margin: 0 auto;
+	height: 10rem;
 	font-size: 2.5rem;
 	margin-left: 10.5rem;
 	resize: none;
@@ -361,17 +361,10 @@ div.preview p {
 
 .print-footer {
 	margin: 0 auto;
-	width: 25%;
 	text-align: center;
 	font-size: 3rem;
-	/*background-color: lightcoral;*/
 	color: lightcoral;
 	margin-bottom: 2rem;
-}
-
-.print-footer a {
-	/*color: steelblue;*/
-	text-decoration: underline;
 }
 
 /* delete form / button */
@@ -498,38 +491,111 @@ div.preview p {
   }
 }
 
-/* for medium-ish screens */
+/* for the dang header problem on sliiiiiight resize */
 
-@media (max-width: 925px) {
+@media (max-width: 1210px) {
 	.site-header {
-	  height: 5rem;
+	  height: 4rem;
 	  width: 85%;
-	  margin: 1rem auto;
-	  padding-bottom: 3rem;
-	  font-family: AmaticBold, serif, fantasy;
-	  letter-spacing: 6px;
-	}
-
-	.site-header ul {
-	  border: 3px double black;
-	  background-color: floralwhite;
+	  margin: 0.75rem auto;
+	  padding-bottom: 2rem;
+	  letter-spacing: 5px;
 	}
 
 	.site-header li {
-	  /*text-align: center;*/
-	  /*vertical-align: middle;*/
-	  font-size: 2.75rem;
-	  list-style: none;
-	  display: inline-block;
-	  padding: 2rem .5rem;
+	  font-size: 3rem;
+	  padding: 1.5rem .5rem;
 	}
 
 	.header-first {
-		margin-left: 4rem;
+		margin-left: 3rem;
+	}
+}
+
+@media (max-width: 1115px) {
+	.site-header {
+	  height: 4rem;
+	  width: 85%;
+	  margin: 0.75rem auto;
+	  padding-bottom: 2rem;
+	  letter-spacing: 5px;
 	}
 
-	.site-header a:hover {
-	  color: lightcoral;
-		transition: 0.25s
+	.site-header li {
+	  font-size: 2.75rem;
+	  padding: 1rem 0rem;
+	}
+
+	.header-first {
+		margin-left: 2rem;
+	}
+
+	.poem-comments {
+		margin-left: 7rem;
+	}
+}
+
+/* for medium-ish screens */
+
+@media (max-width: 975px) {
+	.site-header {
+	  height: 3rem;
+	  width: 85%;
+	  margin: 0.25rem auto;
+	  padding-bottom: 1rem;
+	  letter-spacing: 2px;
+	}
+
+	.site-header li {
+	  font-size: 2.5rem;
+	  padding: 1rem .5rem;
+	}
+
+	.header-first {
+		margin-left: 1rem;
+	}
+}
+
+/* for small-ish screens */
+@media (max-width: 775px) {
+	.site-header {
+	  height: 3rem;
+	  width: 85%;
+	  margin: 0.25rem auto;
+	  padding-bottom: 1rem;
+	  letter-spacing: 2px;
+	}
+
+	.site-header li {
+	  font-size: 2rem;
+	  padding: 1rem .5rem;
+	}
+
+	.header-first {
+		margin-left: 0.5rem;
+	}
+}
+
+/*for tiny screens*/
+@media (max-width: 635px) {
+	.site-header {
+	  height: 3rem;
+	  width: 85%;
+	  margin: 0 auto;
+	  padding-bottom: 1rem;
+	  letter-spacing: 1px;
+	}
+
+	.site-header ul {
+	  font-size: 1.25rem;
+	  padding: 0.25rem 0.25;
+	}
+
+	.header-first {
+		margin-left: 1rem;
+	}
+
+	.poem-comments {
+		margin-left: 5rem; 
 	}
 }
