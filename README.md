@@ -1,6 +1,6 @@
 # Project Two - Kevin Walter: Collaboetry
 
-## a collaborative, wiki-type thing for writerly types
+## a collaborative, wiki-type thing for writers
 
 When my friends and I have new work that we want to share with each other, we usually email attachments, which is lame an inefficient. It's impossible to keep track of versions, and there's no way to keep a record of our comments. With this app, I've tried to create a functional and fun place for friends to share their writing with one another.  
 
@@ -45,31 +45,40 @@ A ton of work thus far, but a ton more to go..
 
 You can use Collaboetry [here](https://mysterious-island-7822.herokuapp.com/).
 
-### Unsolved Problems
-* First and foremost: a couple of hands where aces might still be tricky.
-* Totals display inconsistently, at times, when the hand contains an ace, even though the total value is still correct.
-* Need to find a better timing mechanism for animations.
-* Would love to add more random events to enrich the user experience.
-* Would have loved to implement the split, double down, and insurance options in this game.
+### Unsolved Problems / Things to Include on Future Versions
+* Would like to make a scripts folder in public to hold jQuery Scripts
+* Voting system to ratify all changes--but this may be a project unto itself
+* bcrpyt for passwords
+* user password resets
+* use flash messages to confirm delete of a poem or a version
+* use HTML5 to to capture user audio of them reading their work
+* snippets section (available only to the logged in user) where they can keep notes for future poems
+* figure out issue with rendering the signout page, instead of just redirecting to login view on signout
+* use populate to better organize version content and comments
+* push notifications to alert users when new poems have been posted, or when someone has commented / edited one of theirs
 
 ### Wireframe Images / User Stories / Notes
 
-![Wireframe](https://github.com/kwwalter/retro-blackjack/blob/master/wireframes/IMAG2388.jpg)
+![Wireframe](https://github.com/kwwalter/Collaboetry/blob/master/wireframes/IMAG2481.jpg)
 
-![User Stories](https://github.com/kwwalter/retro-blackjack/blob/master/wireframes/IMAG2389.jpg)
+![Wireframe](https://github.com/kwwalter/Collaboetry/blob/master/wireframes/IMAG2483.jpg)
 
-![ERD / notes](https://github.com/kwwalter/retro-blackjack/blob/master/wireframes/IMAG2390.jpg)
+![Notes](https://github.com/kwwalter/Collaboetry/blob/master/wireframes/IMAG2485.jpg)
+
+![Notes](https://github.com/kwwalter/Collaboetry/blob/master/wireframes/IMAG2484.jpg)
+
+![Wireframe](https://github.com/kwwalter/Collaboetry/blob/master/wireframes/IMAG2486.jpg)
 
 ### Attributions
 
-Last, but certainly not least, here's where I got the materials for the game:
+Many thanks to my teachers at GA (Shorty, Huntington, Kristyn, and Greg) for all the help and support.
 
-* ARCADEPI font: http://www.myfontfree.com/arcadepix-myfontfreecom84f2035.htm
-* Dealer face image, blackjack table image, game over image: Vegas Dream, NES (HAL Laboratory, 1988)
-* GIF background for main section can be found here: http://jecichon.tumblr.com/post/51465620838/trying-to-make-some-interesting-yet-not-annoying
-    * But really, I found it here: http://giphy.com/gifs/blue-background-bPiLQFMPRIEX6)
-* Retro cards sprite sheet: http://davesilvermanart.com/blog/wp-content/uploads/2014/12/NewCards1.png
-* Mario playing card for back of dealer card: http://craziestgadgets.com/wp-content/uploads/2013/07/mario-cards-back.jpg
-* And of course, the background music (Sinatra's "Fly Me to the Moon"): https://www.youtube.com/watch?v=yaWkjUKSyLA
+And of course, to my fellow classmates for helping answer my questions, and for being great to talk to during this crazy, frantic period of app development. Special shout-out to the back row.
+
+I didn't use that much from other people, but here are some elements I borrowed:
+
+* AmaticSC-Bold, AmaticSC-Regular, and OpenSans-CondLight fonts: https://www.google.com/fonts
+* Quill pen favicon!: http://www.favicon.cc/?action=icon&file_id=587903
+* GitHub octocat logo: https://github.com/logos
 
 Thanks to all!
