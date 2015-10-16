@@ -146,13 +146,13 @@ h1 {
 }
 
 .login-signup-form {
-	width: 40%;
+	width: 50%;
 	margin: 0 auto;
 	text-align: center;
 	border: 3px solid powderblue;
 	border-radius: 20px;
 	margin-bottom: 2rem;
-	padding: 1rem;
+	padding: 3rem;
 	background-color: #FFFAFA;
 	/*width: 0%;*/
 }
@@ -161,6 +161,7 @@ h1 {
 	width: 40%;
 	font-size: 2.5rem;
 	margin: 0.5rem;
+	padding-left: 0.5rem;
 }
 
 .login-signup-form input[type="submit"] {
@@ -358,6 +359,21 @@ div.preview p {
 	text-decoration: none;
 }
 
+.print-footer {
+	margin: 0 auto;
+	width: 25%;
+	text-align: center;
+	font-size: 3rem;
+	/*background-color: lightcoral;*/
+	color: lightcoral;
+	margin-bottom: 2rem;
+}
+
+.print-footer a {
+	/*color: steelblue;*/
+	text-decoration: underline;
+}
+
 /* delete form / button */
 
 #delete-button, .suggest-edit {
@@ -366,7 +382,7 @@ div.preview p {
 	text-align: center;
 	margin: 0 auto;
 	display: block;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 }
 
 /* for tags page divs, home page divs, and author page divs */
@@ -447,4 +463,73 @@ div.preview p {
 	margin-left: 2rem;
 	margin-right: 1rem;
 	color: white;
+}
+
+/* *************************************** */
+/* *************MEDIA QUERIES************* */
+/* *************************************** */
+
+/* for print */
+
+@media print {
+	.logged-in-user, .site-header, .show-h a, .show-footer, #delete-form, .suggest-edit, .print-footer {
+		display: none;
+	}
+
+	.show-poem {
+    width: 90%;
+    margin: 0px;
+    padding: 0px;
+	}
+
+	.show-poem-content, .show-poem-comments {
+		border: 1px solid black;
+	}
+
+	* {
+    color: #000;
+    background-color: #fff;
+    /*@include box-shadow(none);
+    @include text-shadow(none);*/
+	}
+
+	a:after {
+    content: "( "attr(href)" )";
+  }
+}
+
+/* for medium-ish screens */
+
+@media (max-width: 925px) {
+	.site-header {
+	  height: 5rem;
+	  width: 85%;
+	  margin: 1rem auto;
+	  padding-bottom: 3rem;
+	  font-family: AmaticBold, serif, fantasy;
+	  letter-spacing: 6px;
+	}
+
+	.site-header ul {
+	  border: 3px double black;
+	  background-color: floralwhite;
+	}
+
+	.site-header li {
+	  /*text-align: center;*/
+	  /*vertical-align: middle;*/
+	  font-size: 2.75rem;
+	  list-style: none;
+	  display: inline-block;
+	  padding: 2rem .5rem;
+	}
+
+	.header-first {
+		margin-left: 4rem;
+	}
+
+	.site-header a:hover {
+	  color: lightcoral;
+		transition: 0.25s
+	}
 }
