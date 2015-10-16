@@ -57,6 +57,14 @@ h1 {
 	margin-right: 10rem;
 }
 
+/*for github link in bottom righthand corner*/
+
+.fork-button {
+	position: fixed;
+ 	top: 555px;
+ 	left: 1200px;
+}
+
 /*for site header*/
 
 .site-header {
@@ -596,6 +604,6 @@ div.preview p {
 	}
 
 	.poem-comments {
-		margin-left: 5rem; 
+		margin-left: 5rem;
 	}
 }
