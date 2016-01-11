@@ -8,6 +8,7 @@ var express           = require('express'),
     methodOverride    = require('method-override'),
     session           = require('express-session'),
     marked            = require('marked'),
+    StatsD            = require('node-dogstatsd').StatsD
     poemController    = require('./controllers/poems.js'),
     Poem              = require('./models/poem.js'),
     userController    = require('./controllers/users.js');
