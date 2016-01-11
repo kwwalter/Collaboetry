@@ -24,6 +24,9 @@ router.get('/new', function(req, res) {
 // user submits a new poem..
 
 router.post('/new', function(req, res, next) {
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:post-new']);
+  var postNewStart = Date.now();
+
   var poemOptions = req.body.poem,
       title = req.body.poem.title,
       content = req.body.poem.content,
@@ -62,6 +65,10 @@ router.post('/new', function(req, res, next) {
       res.end();
     } else {
       console.log(poem.title, " successfully saved!");
+
+      postNewLatency = Date.now() - postNewStart;
+      dogstatsd.histogram('collaboetry.latency', signupLatency, ['support', 'page:post-new']);
+
       res.redirect(302, '/poems/authors/' + poem.poetID);
     }
   });
@@ -70,8 +77,12 @@ router.post('/new', function(req, res, next) {
 // user gets an error posting poem..
 
 router.get('/new-fail', function(req, res) {
+  var newFailStart = Date.now();
   if (res.locals.userLoggedIn) {
-    dogstatsd.increment('collaboetry.page_views', ['support', 'page:new-poem-fail']);
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:new-fail']);
+    newFailLatency = Date.now() - newFailStart;
+    dogstatsd.histogram('collaboetry.latency', newFailLatency, ['support', 'page:new-fail']);
+
     res.render('poems/new-fail');
   } else {
     res.redirect(302, '/');
@@ -81,6 +92,8 @@ router.get('/new-fail', function(req, res) {
 // for a listing of all authors who have submitted poems
 
 router.get('/authors', function(req, res){
+  var allAuthorsStart = Date.now();
+
   // Poem.find({}, function(err, allThePoems){
   //   if (err) {
   //     console.log("Error retrieving all poems from database..");
@@ -126,6 +139,9 @@ router.get('/authors', function(req, res){
 
       console.log("allThePoems", allThePoems);
 
+      allAuthorsLatency = Date.now() - allAuthorsStart;
+      dogstatsd.histogram('collaboetry.latency', signupLatency, ['support', 'page:all-authors']);
+
       res.render('poems/authors', {
         poems: allThePoems,
         authors: allAuthors
@@ -139,7 +155,8 @@ router.get('/authors', function(req, res){
 // this route will grab all poems by a specific author
 
 router.get('/authors/:id', function(req, res) {
-  var start = Date.now();
+  var allPoemsStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-author-poems']);
 
   if (res.locals.userLoggedIn) {
     Poem.find( {
@@ -159,9 +176,8 @@ router.get('/authors/:id', function(req, res) {
       title: 1 })
       .exec(function(err2) {
         // after sort, check how long the request took
-        var latency = Date.now() - start;
-        dogstatsd.histogram('collaboetry.latency', latency, ['support', 'page:all-author-poems']);
-        dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-author-poems']);
+        allPoemsLatency = Date.now() - allPoemsStart;
+        dogstatsd.histogram('collaboetry.latency', allPoemsLatency, ['support', 'page:all-author-poems']);
 
         if (err2) {
           console.log("There was an error sorting the data by author name");
@@ -175,7 +191,8 @@ router.get('/authors/:id', function(req, res) {
 // show one individual poem
 
 router.get('/authors/:authorID/:poemID', function(req, res) {
-  var start = Date.now();
+  var onePoemStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:one-poem']);
 
   if (res.locals.userLoggedIn) {
     Poem.findOne( {
@@ -185,9 +202,9 @@ router.get('/authors/:authorID/:poemID', function(req, res) {
         console.log("Error finding individual poem with id: ", req.params.poemID);
       } else {
         console.log("found poem is: ", foundPoem);
-        var latency = Date.now() - start;
-        dogstatsd.histogram('collaboetry-1poem.latency', latency, ['support', 'page:one-poem']);
-        dogstatsd.increment('collaboetry.page_views', ['support', 'page:one-poem']);
+
+        var onePoemLatency = Date.now() - onePoemStart;
+        dogstatsd.histogram('collaboetry.latency', onePoemLatency, ['support', 'page:one-poem']);
 
         res.render('poems/show', {
           poem: foundPoem,
@@ -203,9 +220,10 @@ router.get('/authors/:authorID/:poemID', function(req, res) {
 // edit that one individual poem
 
 router.get('/authors/:authorID/:poemID/edit', function(req, res) {
-  if (res.locals.userLoggedIn) {
-    dogstatsd.increment('collaboetry.page_views', ['support', 'page:edit-poem']);
+  var editStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:edit-poem']);
 
+  if (res.locals.userLoggedIn) {
     Poem.findOne( {
       _id: req.params.poemID
     }, function(err, foundPoem) {
@@ -213,6 +231,10 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res) {
         console.log("Error finding individual poem with id: ", req.params.poemID);
       } else {
         console.log("found poem is: ", foundPoem);
+
+        editLatency = Date.now() - editStart;
+        dogstatsd.histogram('collaboetry.latency', editLatency, ['support', 'page:edit-poem']);
+
         res.render('poems/edit', {
           poem: foundPoem,
           currentUsername: req.session.username,
@@ -229,6 +251,9 @@ router.get('/authors/:authorID/:poemID/edit', function(req, res) {
 // PATCH request for edit poem
 
 router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
+  var patchStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:patch-poem']);
+
   var poemOptions = req.body.poem,
       title = req.body.poem.title,
       content = req.body.poem.content,
@@ -246,6 +271,10 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
       console.log("could not find the poem to update!", err);
     } else {
       console.log("updated!");
+
+      patchLatency = Date.now() - patchStart;
+      dogstatsd.histogram('collaboetry.latency', patchLatency, ['support', 'page:patch-poem']);
+
       res.redirect(302, '/poems/authors');
     }
   });
@@ -254,8 +283,10 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
 // Show all previous versions of a specific poem
 
 router.get('/authors/:authorID/:poemID/previous', function(req, res){
+  var allVersionsStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-versions']);
+
   if (res.locals.userLoggedIn) {
-    dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-versions']);
     Poem.findOne( {
       _id: req.params.poemID
     }, function(err, foundPoem) {
@@ -263,6 +294,10 @@ router.get('/authors/:authorID/:poemID/previous', function(req, res){
         console.log("Error finding individual poem with id: ", req.params.poemID);
       } else {
         console.log("found poem is: ", foundPoem);
+
+        allVersionsLatency = Date.now() - allVersionsStart;
+        dogstatsd.histogram('collaboetry.latency', allVersionsLatency, ['support', 'page:all-versions']);
+
         res.render('poems/previous-versions', {
           poem: foundPoem,
           currentUsername: req.session.username,
@@ -279,8 +314,10 @@ router.get('/authors/:authorID/:poemID/previous', function(req, res){
 // show a particular version of a single poem
 
 router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
+  var oneVersionStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:one-version']);
+
   if (res.locals.userLoggedIn) {
-    dogstatsd.increment('collaboetry.page_views', ['support', 'page:one-version']);
     Poem.findOne( { _id: req.params.poemID }, function(err, foundPoem) {
     if (err) {
       console.log("error locating poem, ", err);
@@ -295,6 +332,10 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
 
             if (i + 1 == foundPoem.previousVersions.length) {
               last = true;
+
+              oneVersionLatency = Date.now() - oneVersionStart;
+              dogstatsd.histogram('collaboetry.latency', oneVersionLatency, ['support', 'page:one-version']);
+
               res.render('poems/show-previous', {
                  version: foundVersion,
                  versionComments: foundPoem.commentsHistory[i],
@@ -310,6 +351,10 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
                });
              } else {
                last = false;
+
+               oneVersionLatency = Date.now() - oneVersionStart;
+               dogstatsd.histogram('collaboetry.latency', oneVersionLatency, ['support', 'page:one-version']);
+
                res.render('poems/show-previous', {
                   version: foundVersion,
                   versionComments: foundPoem.commentsHistory[i],
@@ -442,6 +487,7 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
 // Delete entire Poem (if currentUser == author)
 
 router.delete('/authors/:authorID/:poemID', function(req, res) {
+  var deletePoemStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:delete-poem']);
 
   var poemToDelete = req.params.poemID;
@@ -453,6 +499,9 @@ router.delete('/authors/:authorID/:poemID', function(req, res) {
       if (err) {
         console.log("there was an error deleting this poem: ", poemToDelete);
       } else {
+        deletePoemLatency = Date.now() - deletePoemStart;
+        dogstatsd.histogram('collaboetry.latency', deletePoemLatency, ['support', 'page:delete-poem']);
+
         res.redirect(302, '/poems/authors');
       }
     });
@@ -462,6 +511,7 @@ router.delete('/authors/:authorID/:poemID', function(req, res) {
 // Delete just one version of the poem (if currentUser == author or version editor -- that's the only way the button can appear)
 
 router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
+  var deleteVersionStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:delete-version']);
 
   var poemID = req.params.poemID,
@@ -474,6 +524,9 @@ router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
       if (err) {
         console.log(err);
       } else {
+        deleteVersionLatency = Date.now() - deleteVersionStart;
+        dogstatsd.histogram('collaboetry.latency', deleteVersionLatency, ['support', 'page:delete-version']);
+
         res.redirect(302, '/poems/authors/' + req.params.authorID + '/' + poemID + '/previous');
       }
     }
@@ -483,9 +536,10 @@ router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
 // will show all tags that have been inputted by users during poem submission
 
 router.get('/tags', function(req, res, next) {
-  if (res.locals.userLoggedIn) {
-    dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-tags']);
+  var allTagsStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-tags']);
 
+  if (res.locals.userLoggedIn) {
     var allTheTags = [];
 
     Poem.find({})
@@ -509,6 +563,9 @@ router.get('/tags', function(req, res, next) {
 
         // alphabetize the array..
         allTheTags.sort();
+
+        allTagsLatency = Date.now() - allTagsStart;
+        dogstatsd.histogram('collaboetry.latency', allTagsLatency, ['support', 'page:all-tags']);
 
         res.render('poems/tags', {
           poems: allPoems,
@@ -542,8 +599,6 @@ router.get('/tags', function(req, res, next) {
 // Probably won't have time for this..
 router.get('/vote', function(req, res, next) {
   if (res.locals.userLoggedIn) {
-    dogstatsd.increment('collaboetry.page_views', ['support', 'page:vote']);
-
     res.render('poems/vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
   } else {
     res.redirect(302, '/');

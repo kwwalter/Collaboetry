@@ -84,7 +84,11 @@ server.use('/poems', poemController);
 // });
 
 server.get('/', function(req, res){
+  var rootStart = Date.now();
+
+  rootLatency = Date.now() - rootStart;
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:root']);
+  dogstatsd.histogram('collaboetry.latency', rootLatency, ['support', 'page:root']);
   console.log("have to log in. redirecting..");
   res.redirect(302, '/users/login');
 });
@@ -102,7 +106,9 @@ server.get('/home', function(req, res){
 // user logs in and is directed to home page.. should display all of their poems
 
 server.get('/home/:userID', function(req, res) {
+  var homeStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:home']);
+
   Poem.find( {
     poetID: req.params.userID
   }, function(err, foundPoems) {
@@ -113,6 +119,8 @@ server.get('/home/:userID', function(req, res) {
       console.log("found poems: ", foundPoems);
       //redirect to poems by this author after finding their user object in database
       if (foundPoems[0]) {
+        homeLatency = Date.now() - homeStart;
+        dogstatsd.histogram('collaboetry.latency', homeLatency, ['support', 'page:home']);
         res.render('home', {
           poems: foundPoems,
           authorName: foundPoems[0].authorName
@@ -131,7 +139,10 @@ server.get('/home/:userID', function(req, res) {
 });
 
 server.get('/new-user/:id', function(req, res) {
+  var newUserStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:new-user']);
+  newUserLatency = Date.now() - newUserStart;
+  dogstatsd.histogram('collaboetry.latency', newUserLatency, ['support', 'page:new-user']);
   res.render('new-user');
 });
 
@@ -142,7 +153,10 @@ server.get('/new-user/:id', function(req, res) {
 // failsafe in case someone gets to where they're not supposed to be..
 
 server.use(function(req, res, next){
+  var errorStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:404']);
+  errorLatency = Date.now() - errorStart;
+  dogstatsd.histogram('collaboetry.latency', errorLatency, ['support', 'page:404']);
 
   res.write("You've reached the end of the road, pal.");
   res.end();

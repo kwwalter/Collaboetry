@@ -10,11 +10,13 @@ var dogstatsd = new StatsD();
 // routes for this router
 
 router.get('/signup', function(req, res) {
-  dogstatsd.increment('collaboetry.page_views', ['support', 'page:signup']);
   res.render('users/signup');
 });
 
 router.post('/signup', function(req, res) {
+  var signupStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:signup']);
+
   var attemptedSignup = req.body.user;
   var newUser = User(req.body.user);
 
@@ -40,6 +42,10 @@ router.post('/signup', function(req, res) {
           req.session.currentUser = user._id;
           req.session.username = user.username;
           req.session.email = user.email;
+
+          signupLatency = Date.now() - signupStart;
+          dogstatsd.histogram('collaboetry.latency', signupLatency, ['support', 'page:signup']);
+
           res.redirect(302, '../new-user' + "/" + user._id);
         }
       });
@@ -48,22 +54,27 @@ router.post('/signup', function(req, res) {
 });
 
 router.get('/signup-fail', function(req, res) {
+  var signupFailStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:signup-fail']);
+  signupFailLatency = Date.now() - signupFailStart;
+  dogstatsd.histogram('collaboetry.latency', signupFailLatency, ['support', 'page:signup-fail']);
 
   res.render('users/signup-fail')
 })
 
 router.get('/login', function(req, res){
-  var start = Date.now();
-
-  var latency = Date.now() - start;
-  dogstatsd.histogram('collaboetry-login.latency', latency, ['support', 'page:login']);
+  var renderLoginStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:login']);
+  renderLoginLatency = Date.now() - renderLoginStart;
+  dogstatsd.histogram('collaboetry.latency', renderLoginLatency, ['support', 'page:login']);
 
   res.render('users/login');
 });
 
 router.post('/login', function(req, res){
+  var loginStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:post-login']);
+
   var attemptedLogin = req.body.user;
   console.log("user trying to log in as: \n", attemptedLogin);
 
@@ -77,6 +88,9 @@ router.post('/login', function(req, res){
         req.session.username = foundUser.username;
         req.session.email = foundUser.email;
 
+        var loginLatency = Date.now() - loginStart;
+        dogstatsd.histogram('collaboetry.latency', loginLatency, ['support', 'page:post-login']);
+
         res.redirect(302, '../home' + "/" + foundUser._id);
       } else {
         console.log("Error locating this user in the database OR password didn't match");
@@ -86,14 +100,15 @@ router.post('/login', function(req, res){
 });
 
 router.get('/login-fail', function(req, res){
+  var loginFailStart = Date.now();
   dogstatsd.increment('collaboetry.page_views', ['support', 'page:login-fail']);
+  loginFailLatency = Date.now() - loginFailStart;
+  dogstatsd.histogram('collaboetry.latency', loginFailLatency, ['support', 'page:login-fail']);
 
   res.render('users/login-fail');
 });
 
 router.get('/signout', function(req, res) {
-  dogstatsd.increment('collaboetry.page_views', ['support', 'page:signout']);
-
   req.session.currentUser = null;
   req.session.username = null;
   req.session.email = null;
@@ -106,6 +121,9 @@ router.get('/signout', function(req, res) {
 });
 
 router.post('/signout', function(req, res) {
+  var signoutStart = Date.now();
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:signout']);
+
   var newUser = User(req.body.user);
 
   newUser.save(function(err, user) {
@@ -118,6 +136,10 @@ router.post('/signout', function(req, res) {
       req.session.currentUser = foundUser._id;
       req.session.username = foundUser.username;
       req.session.email = foundUser.email;
+
+      signoutLatency = Date.now() - signoutStart;
+      dogstatsd.histogram('collaboetry.latency', signoutLatency, ['support', 'page:signout']);
+
       res.redirect(302, '../new-user' + "/" + user._id);
     }
   });
