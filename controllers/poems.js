@@ -140,7 +140,7 @@ router.get('/authors', function(req, res){
       console.log("allThePoems", allThePoems);
 
       allAuthorsLatency = Date.now() - allAuthorsStart;
-      dogstatsd.histogram('collaboetry.latency', signupLatency, ['support', 'page:all-authors']);
+      dogstatsd.histogram('collaboetry.latency', allAuthorsLatency, ['support', 'page:all-authors']);
 
       res.render('poems/authors', {
         poems: allThePoems,
