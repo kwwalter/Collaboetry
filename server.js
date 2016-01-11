@@ -8,10 +8,13 @@ var express           = require('express'),
     methodOverride    = require('method-override'),
     session           = require('express-session'),
     marked            = require('marked'),
-    StatsD            = require('node-dogstatsd').StatsD
+    StatsD            = require('node-dogstatsd').StatsD,
     poemController    = require('./controllers/poems.js'),
     Poem              = require('./models/poem.js'),
     userController    = require('./controllers/users.js');
+
+// node-dogstatsd setup
+var dogstatsd = new StatsD();
 
 // server setup
 var PORT    = process.env.PORT || 3788,
@@ -81,6 +84,7 @@ server.use('/poems', poemController);
 // });
 
 server.get('/', function(req, res){
+  dogstatsd.increment('collaboetry.page_views');
   console.log("have to log in. redirecting..");
   res.redirect(302, '/users/login');
 });

@@ -1,7 +1,11 @@
 var express = require('express'),
+    StatsD  = require('node-dogstatsd').StatsD,
     router  = express.Router(),
     Poem    = require('../models/poem.js'),
     User    = require('../models/user.js');
+
+// node-dogstatsd setup
+var dogstatsd = new StatsD();
 
 // routes for this router
 
@@ -130,6 +134,8 @@ router.get('/authors', function(req, res){
 // this route will grab all poems by a specific author
 
 router.get('/authors/:id', function(req, res) {
+  var start = Date.now();
+
   if (res.locals.userLoggedIn) {
     Poem.find( {
       poetID: req.params.id
@@ -146,8 +152,12 @@ router.get('/authors/:id', function(req, res) {
       }
     }).sort( {
       title: 1 })
-      // .populate('_username')
       .exec(function(err2) {
+        // after sort, check how long the request took
+        var latency = Date.now() - start;
+        dogstatsd.histogram('collaboetry.latency', latency);
+        dogstatsd.increment('collaboetry.page_views');
+
         if (err2) {
           console.log("There was an error sorting the data by author name");
         }
@@ -160,6 +170,8 @@ router.get('/authors/:id', function(req, res) {
 // show one individual poem
 
 router.get('/authors/:authorID/:poemID', function(req, res) {
+  var start = Date.now();
+
   if (res.locals.userLoggedIn) {
     Poem.findOne( {
       _id: req.params.poemID
@@ -168,6 +180,10 @@ router.get('/authors/:authorID/:poemID', function(req, res) {
         console.log("Error finding individual poem with id: ", req.params.poemID);
       } else {
         console.log("found poem is: ", foundPoem);
+        var latency = Date.now() - start;
+        dogstatsd.histogram('collaboetry-1poem.latency', latency);
+        dogstatsd.increment('collaboetry.page_views');
+
         res.render('poems/show', {
           poem: foundPoem,
           currentUser: req.session.currentUser

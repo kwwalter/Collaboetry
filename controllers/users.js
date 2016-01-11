@@ -1,7 +1,11 @@
 var express = require('express'),
+    StatsD  = require('node-dogstatsd').StatsD,
     router  = express.Router(),
     User    = require('../models/user.js'),
     Poem    = require('../models/poem.js');
+
+// node-dogstatsd setup
+var dogstatsd = new StatsD();
 
 // routes for this router
 
@@ -47,6 +51,12 @@ router.get('/signup-fail', function(req, res) {
 })
 
 router.get('/login', function(req, res){
+  var start = Date.now();
+
+  var latency = Date.now() - start;
+  dogstatsd.histogram('collaboetry-login.latency', latency);
+  dogstatsd.increment('collaboetry.page_views');
+  
   res.render('users/login');
 });
 
@@ -65,7 +75,6 @@ router.post('/login', function(req, res){
         req.session.email = foundUser.email;
 
         res.redirect(302, '../home' + "/" + foundUser._id);
-
       } else {
         console.log("Error locating this user in the database OR password didn't match");
         res.redirect(302, '/users/login-fail');
