@@ -13,6 +13,8 @@ var dogstatsd = new StatsD();
 
 router.get('/new', function(req, res) {
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:new-poem']);
+
     res.render('poems/new');
   } else {
     res.redirect(302, '/');
@@ -69,6 +71,7 @@ router.post('/new', function(req, res, next) {
 
 router.get('/new-fail', function(req, res) {
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:new-poem-fail']);
     res.render('poems/new-fail');
   } else {
     res.redirect(302, '/');
@@ -99,6 +102,8 @@ router.get('/authors', function(req, res){
   //   });
 
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-authors']);
+
     var allAuthors = [];
 
     Poem.find({})
@@ -155,8 +160,8 @@ router.get('/authors/:id', function(req, res) {
       .exec(function(err2) {
         // after sort, check how long the request took
         var latency = Date.now() - start;
-        dogstatsd.histogram('collaboetry.latency', latency);
-        dogstatsd.increment('collaboetry.page_views');
+        dogstatsd.histogram('collaboetry.latency', latency, ['support', 'page:all-author-poems']);
+        dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-author-poems']);
 
         if (err2) {
           console.log("There was an error sorting the data by author name");
@@ -181,8 +186,8 @@ router.get('/authors/:authorID/:poemID', function(req, res) {
       } else {
         console.log("found poem is: ", foundPoem);
         var latency = Date.now() - start;
-        dogstatsd.histogram('collaboetry-1poem.latency', latency);
-        dogstatsd.increment('collaboetry.page_views');
+        dogstatsd.histogram('collaboetry-1poem.latency', latency, ['support', 'page:one-poem']);
+        dogstatsd.increment('collaboetry.page_views', ['support', 'page:one-poem']);
 
         res.render('poems/show', {
           poem: foundPoem,
@@ -199,6 +204,8 @@ router.get('/authors/:authorID/:poemID', function(req, res) {
 
 router.get('/authors/:authorID/:poemID/edit', function(req, res) {
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:edit-poem']);
+
     Poem.findOne( {
       _id: req.params.poemID
     }, function(err, foundPoem) {
@@ -248,6 +255,7 @@ router.patch('/authors/:authorID/:poemID/edit', function(req, res) {
 
 router.get('/authors/:authorID/:poemID/previous', function(req, res){
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-versions']);
     Poem.findOne( {
       _id: req.params.poemID
     }, function(err, foundPoem) {
@@ -272,6 +280,7 @@ router.get('/authors/:authorID/:poemID/previous', function(req, res){
 
 router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:one-version']);
     Poem.findOne( { _id: req.params.poemID }, function(err, foundPoem) {
     if (err) {
       console.log("error locating poem, ", err);
@@ -433,6 +442,8 @@ router.get('/authors/:authorID/:poemID/:versionID', function(req, res){
 // Delete entire Poem (if currentUser == author)
 
 router.delete('/authors/:authorID/:poemID', function(req, res) {
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:delete-poem']);
+
   var poemToDelete = req.params.poemID;
 
   if (req.session.currentUser == req.params.authorID) {
@@ -451,6 +462,8 @@ router.delete('/authors/:authorID/:poemID', function(req, res) {
 // Delete just one version of the poem (if currentUser == author or version editor -- that's the only way the button can appear)
 
 router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:delete-version']);
+
   var poemID = req.params.poemID,
       versionToDelete = req.params.versionID;
 
@@ -471,6 +484,8 @@ router.delete('/authors/:authorID/:poemID/:versionID', function(req, res){
 
 router.get('/tags', function(req, res, next) {
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:all-tags']);
+
     var allTheTags = [];
 
     Poem.find({})
@@ -527,6 +542,8 @@ router.get('/tags', function(req, res, next) {
 // Probably won't have time for this..
 router.get('/vote', function(req, res, next) {
   if (res.locals.userLoggedIn) {
+    dogstatsd.increment('collaboetry.page_views', ['support', 'page:vote']);
+
     res.render('poems/vote', { /* TO-DO: Poem data so we can display all poems that have been edited within the last [x] hours */ });
   } else {
     res.redirect(302, '/');

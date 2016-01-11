@@ -10,6 +10,7 @@ var dogstatsd = new StatsD();
 // routes for this router
 
 router.get('/signup', function(req, res) {
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:signup']);
   res.render('users/signup');
 });
 
@@ -47,6 +48,8 @@ router.post('/signup', function(req, res) {
 });
 
 router.get('/signup-fail', function(req, res) {
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:signup-fail']);
+
   res.render('users/signup-fail')
 })
 
@@ -54,9 +57,9 @@ router.get('/login', function(req, res){
   var start = Date.now();
 
   var latency = Date.now() - start;
-  dogstatsd.histogram('collaboetry-login.latency', latency);
-  dogstatsd.increment('collaboetry.page_views');
-  
+  dogstatsd.histogram('collaboetry-login.latency', latency, ['support', 'page:login']);
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:login']);
+
   res.render('users/login');
 });
 
@@ -83,10 +86,14 @@ router.post('/login', function(req, res){
 });
 
 router.get('/login-fail', function(req, res){
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:login-fail']);
+
   res.render('users/login-fail');
 });
 
 router.get('/signout', function(req, res) {
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:signout']);
+
   req.session.currentUser = null;
   req.session.username = null;
   req.session.email = null;

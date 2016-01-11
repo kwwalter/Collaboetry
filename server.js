@@ -84,7 +84,7 @@ server.use('/poems', poemController);
 // });
 
 server.get('/', function(req, res){
-  dogstatsd.increment('collaboetry.page_views');
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:root']);
   console.log("have to log in. redirecting..");
   res.redirect(302, '/users/login');
 });
@@ -102,6 +102,7 @@ server.get('/home', function(req, res){
 // user logs in and is directed to home page.. should display all of their poems
 
 server.get('/home/:userID', function(req, res) {
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:home']);
   Poem.find( {
     poetID: req.params.userID
   }, function(err, foundPoems) {
@@ -130,6 +131,7 @@ server.get('/home/:userID', function(req, res) {
 });
 
 server.get('/new-user/:id', function(req, res) {
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:new-user']);
   res.render('new-user');
 });
 
@@ -140,6 +142,8 @@ server.get('/new-user/:id', function(req, res) {
 // failsafe in case someone gets to where they're not supposed to be..
 
 server.use(function(req, res, next){
+  dogstatsd.increment('collaboetry.page_views', ['support', 'page:404']);
+
   res.write("You've reached the end of the road, pal.");
   res.end();
 })
